@@ -45,8 +45,10 @@ public class FeatureMatcherTest {
 
         //Imgproc.equalizeHist(scene,scene);
 */
-        //Imgproc.resize(template,template,new Size((int) Math.round(template.size().width/2),(int) Math.round(template.size().height/2)));
-        //Imgproc.resize(scene,scene,new Size((int) Math.round(scene.size().width/5),(int) Math.round(scene.size().height/5)));
+
+        double resizeBy = 5;
+        Imgproc.resize(template,template,new Size((int) Math.round(template.size().width/resizeBy),(int) Math.round(template.size().height/resizeBy)));
+        Imgproc.resize(scene,scene,new Size((int) Math.round(scene.size().width/resizeBy),(int) Math.round(scene.size().height/resizeBy)));
 
         long time0 = System.currentTimeMillis();
 
