@@ -3,8 +3,6 @@ import org.opencv.core.*;
 import org.opencv.features2d.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
-import org.opencv.videoio.VideoCapture;
-import org.opencv.videoio.Videoio;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -39,7 +37,7 @@ public class FeatureMatcherTest {
         } catch (InterruptedException ex) {
         }
 
-        cap.read(scene);
+        cap.read(nvghffhkjgfvhmnhngmhnjmgghnmghjgjhgjhgjhghjscene);
         showResult(scene);
         Imgproc.cvtColor(scene,scene,Imgproc.COLOR_BGR2GRAY);
 
@@ -78,9 +76,9 @@ public class FeatureMatcherTest {
 
         float ratioThresh = 0.8f;
         List<DMatch> listOfGoodMatches = new ArrayList<>();
-        for (int i = 0; i < matches.size(); i++) {
-            if (matches.get(i).rows() > 1) {
-                DMatch[] matchList = matches.get(i).toArray();
+        for (MatOfDMatch match : matches) {
+            if (match.rows() > 1) {
+                DMatch[] matchList = match.toArray();
                 if (matchList[0].distance < ratioThresh * matchList[1].distance) {
                     listOfGoodMatches.add(matchList[0]);
                 }
@@ -99,9 +97,10 @@ public class FeatureMatcherTest {
         List<KeyPoint> keypoints_objectList = templatePoints.toList();
         List<KeyPoint> keypoints_sceneList = scenePoints.toList();
 
-        for(int i = 0; i < listOfGoodMatches.size(); i++){
-            objList.addLast(keypoints_objectList.get(listOfGoodMatches.get(i).queryIdx).pt);
-            sceneList.addLast(keypoints_sceneList.get(listOfGoodMatches.get(i).trainIdx).pt); }
+        for(DMatch goodMatch : listOfGoodMatches){
+            objList.addLast(keypoints_objectList.get(goodMatch.queryIdx).pt);
+            sceneList.addLast(keypoints_sceneList.get(goodMatch.trainIdx).pt);
+        }
 
         MatOfPoint2f obj = new MatOfPoint2f();
         obj.fromList(objList);
@@ -140,13 +139,7 @@ public class FeatureMatcherTest {
 
         //cap.release();
     }
-    private static List<MatOfByte> genMask(int size) {
-        List<MatOfByte> mask = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            mask.add(new MatOfByte(new byte[] {0,0}));
-        }
-        return mask;
-    }
+
     private static void showResult(Mat display) {
         Mat img = display.clone();
         Imgproc.resize(img, img, new Size(640, (int) Math.round((640/img.size().width)*img.size().height)));
