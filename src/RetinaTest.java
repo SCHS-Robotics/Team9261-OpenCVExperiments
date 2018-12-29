@@ -34,7 +34,7 @@ public class RetinaTest {
         retina.getMagno(magno);
 
         //showResult(input);
-        showResult(parvo);
+        //showResult(parvo);
         //showResult(magno);
     }
 

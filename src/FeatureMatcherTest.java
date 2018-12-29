@@ -17,8 +17,8 @@ import java.util.List;
 public class FeatureMatcherTest {
     static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
     public static void main(String args[]) {
-        String templateName = "C:\\Users\\coles\\OneDrive\\Desktop\\Data\\2.jpg";
-        String sceneName = "C:\\Users\\coles\\OneDrive\\Desktop\\Data\\unnamed.jpg";
+        String templateName = "C:\\Users\\coles\\Desktop\\Data\\2.jpg";
+        String sceneName = "C:\\Users\\coles\\Desktop\\Data\\unnamed.jpg";
         Mat template = Imgcodecs.imread(templateName,Imgcodecs.IMREAD_GRAYSCALE);
         Mat scene = Imgcodecs.imread(sceneName,Imgcodecs.IMREAD_GRAYSCALE);
         /*Mat scene = new Mat();
