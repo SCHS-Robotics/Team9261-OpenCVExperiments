@@ -1,4 +1,3 @@
-import org.opencv.bioinspired.Bioinspired;
 import org.opencv.bioinspired.Retina;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;

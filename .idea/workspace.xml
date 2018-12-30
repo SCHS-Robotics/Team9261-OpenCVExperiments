@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e3087684-9b78-498b-aaf8-eb342ea29b5d" name="Default Changelist" comment="" />
+    <list default="true" id="e3087684-9b78-498b-aaf8-eb342ea29b5d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/FeatureMatcherTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/FeatureMatcherTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RetinaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RetinaTest.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,8 +18,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FeatureMatcherTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="19" column="46" selection-start-line="19" selection-start-column="46" selection-end-line="19" selection-end-column="46" />
+            <state relative-caret-position="102">
+              <caret line="20" column="46" selection-start-line="20" selection-start-column="46" selection-end-line="20" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -23,8 +27,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/RetinaTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
+            <state relative-caret-position="204">
+              <caret line="12" column="58" lean-forward="true" selection-start-line="12" selection-start-column="58" selection-end-line="12" selection-end-column="58" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -60,14 +67,14 @@
         <option value="$PROJECT_DIR$/src/MainClass.java" />
         <option value="$PROJECT_DIR$/src/VideoTest.java" />
         <option value="$PROJECT_DIR$/src/GoldMine1.java" />
-        <option value="$PROJECT_DIR$/src/RetinaTest.java" />
         <option value="$PROJECT_DIR$/src/FeatureMatcherTest.java" />
+        <option value="$PROJECT_DIR$/src/RetinaTest.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="439" />
-    <option name="y" value="262" />
+    <option name="x" value="361" />
+    <option name="y" value="47" />
     <option name="width" value="1412" />
     <option name="height" value="901" />
   </component>
@@ -117,7 +124,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1546060342311" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1546125917945" />
     <property name="last_opened_file_path" value="$USER_HOME$/OneDrive/Desktop/buildspace/contribbuild/install/java/opencv_java401.dll" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -201,13 +208,28 @@
       <option name="project" value="LOCAL" />
       <updated>1546059999953</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Hopefully a fix for my terrible github skills also">
+      <created>1546060215590</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1546060215590</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Minor bugfixes and improvements">
+      <created>1546060377819</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1546060377819</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="361" y="47" width="1412" height="901" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17011835" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17011835" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -217,7 +239,7 @@
       <window_info id="Learn" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.21610738" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49926037" visible="true" weight="0.21610738" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997396" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -225,7 +247,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="JProfiler" order="8" />
       <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32900432" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50073963" side_tool="true" visible="true" weight="0.21610738" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.3294271" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -275,7 +297,9 @@
     </ignored-roots>
     <MESSAGE value="Don't worry about this one" />
     <MESSAGE value="Hopefully a fix for my terrible github skills" />
-    <option name="LAST_COMMIT_MESSAGE" value="Hopefully a fix for my terrible github skills" />
+    <MESSAGE value="Hopefully a fix for my terrible github skills also" />
+    <MESSAGE value="Minor bugfixes and improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor bugfixes and improvements" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/DetectPictograph.java">
@@ -409,15 +433,18 @@
     <entry file="jar://$USER_HOME$/OneDrive/Desktop/buildspace/contribbuild/install/java/opencv-401.jar!/org/opencv/bioinspired/Retina.java" />
     <entry file="file://$PROJECT_DIR$/src/FeatureMatcherTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="19" column="46" selection-start-line="19" selection-start-column="46" selection-end-line="19" selection-end-column="46" />
+        <state relative-caret-position="102">
+          <caret line="20" column="46" selection-start-line="20" selection-start-column="46" selection-end-line="20" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RetinaTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
+        <state relative-caret-position="204">
+          <caret line="12" column="58" lean-forward="true" selection-start-line="12" selection-start-column="58" selection-end-line="12" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
