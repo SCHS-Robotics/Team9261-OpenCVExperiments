@@ -1,4 +1,3 @@
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
@@ -11,27 +10,34 @@ public class Line {
     double xCoord;
     boolean isVertical = false;
 
-    double length;
-
     Point start;
     Point end;
 
+    double length;
+
+    public Line(double m, double b) {
+        this.m = m;
+        this.b = b;
+    }
+    public Line(double xCoord) {
+        this.xCoord = xCoord;
+        this.isVertical = true;
+    }
     public Line(Point a, Point b) {
-        this.start = a;
-        this.end = b;
-
-        this.m = calcSlope(a,b);
-        this.b = calcYIntercept(this.m,a);
-
+        this.m = (b.y - a.y)/(b.x - a.x);
+        this.b = -this.m*a.x + a.y;
         this.length = calcDist(a,b);
 
-        this.isVertical = this.m == Double.POSITIVE_INFINITY || this.m == Double.NEGATIVE_INFINITY;
-        if(this.isVertical) {
+        start = a;
+        end = b;
+
+        if(this.m == Double.POSITIVE_INFINITY || this.m == Double.NEGATIVE_INFINITY) {
+            this.isVertical = true;
             this.xCoord = this.start.x;
         }
     }
     public double calc(double x) {
-        double val = !this.isVertical ? this.m*x+this.b : this.xCoord;
+        double val = !isVertical ? m*x+b : this.xCoord;
         return val;
     }
     public Point getIntersectWith(Line l) {
@@ -55,24 +61,13 @@ public class Line {
         return Math.sqrt(Math.pow((a.x-b.x),2)+ Math.pow((a.y-b.y),2));
     }
 
-    private double calcSlope(Point a, Point b) {
-        return (b.y-a.y)/(b.x-a.x);
-    }
-
-    private double calcYIntercept(double m, Point p) {
-        return -m*p.x + p.y;
-    }
-
     public void draw(Mat input) {
         if(!this.isVertical) {
-            Imgproc.line(input,new Point(0,this.b), new Point(1280,this.calc(1280)),new Scalar(0,255,0),1);
+            Imgproc.line(input,new Point(0,this.b), new Point(640,this.calc(640)),new Scalar(0,255,0),1);
         }
         else {
-            Imgproc.line(input,new Point(this.xCoord,0), new Point(this.xCoord,640), new Scalar(0,255,0),1);
+            Imgproc.line(input,new Point(this.xCoord,0), new Point(this.xCoord,640), new Scalar(0,255,0),1
+            );
         }
-    }
-    public void drawLabeled(Mat input, String label) {
-        draw(input);
-        Imgproc.putText(input,label,new Point(Math.floor((start.x+end.x)/2),Math.floor((start.y+end.y)/2)-5), Imgproc.FONT_HERSHEY_COMPLEX,1,new Scalar(0,255,0),1);
     }
 }
