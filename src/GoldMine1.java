@@ -16,8 +16,8 @@ public class GoldMine1 {
     public static void main (String args[]) {
 
         String filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\40108068_320820165353263_2733329782681540191_n.jpg";
-        filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\20180910_095634.jpg";
-        filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\20180910_094912.jpg";
+        filename = "C:\\Users\\Cole Savage\\Desktop\\20180910_095634.jpg";
+        filename = "C:\\Users\\Cole Savage\\Desktop\\20180910_094912.jpg";
         //filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\b.jpg";
 
         Mat inputFrame = Imgcodecs.imread(filename); //Reads in image from file, only used for testing purposes
@@ -179,7 +179,7 @@ public class GoldMine1 {
 
         //Prints result to the screen, only used for testing purposes
         Imgproc.cvtColor(inputFrame,inputFrame,Imgproc.COLOR_BGR2RGBA);
-        //showResult(inputFrame);
+        showResult(inputFrame);
 
         //Empties the cosmic garbage can
         System.gc();
