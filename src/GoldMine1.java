@@ -1,3 +1,4 @@
+import org.opencv.bioinspired.Retina;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
@@ -15,14 +16,23 @@ public class GoldMine1 {
     static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
     public static void main (String args[]) {
 
+
+
         String filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\40108068_320820165353263_2733329782681540191_n.jpg";
         filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\20180910_095634.jpg";
         filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\20180910_094912.jpg";
-        //filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\b.jpg";
+        filename = "C:\\Users\\coles\\Desktop\\Data\\failure\\IMG-1742.jpg";
 
         Mat inputFrame = Imgcodecs.imread(filename); //Reads in image from file, only used for testing purposes
         Imgproc.resize(inputFrame,inputFrame,new Size(inputFrame.size().width/4,inputFrame.size().height/4)); //Reduces image size for speed
         Imgproc.cvtColor(inputFrame,inputFrame,Imgproc.COLOR_BGR2RGBA); //Converts input image from BGR to RGBA, only used for testing purposes
+
+        Retina retina = Retina.create(inputFrame.size());
+        retina.setup("C:\\Users\\coles\\Desktop\\Data\\RetinaParams2.xml");
+        retina.clearBuffers();
+        inputFrame.convertTo(inputFrame,CvType.CV_32F);
+        retina.applyFastToneMapping(inputFrame,inputFrame);
+        inputFrame.convertTo(inputFrame,CvType.CV_8U);
 
         //Defines all Mats that will be used in the program
         Mat lab = new Mat();
@@ -49,6 +59,8 @@ public class GoldMine1 {
         image by contrast. The binary threshold is very inclusive, for reasons that will become clear later*/
         Imgproc.threshold(bChan,labThreshBinary,145,255,Imgproc.THRESH_BINARY);
         Imgproc.threshold(bChan,labThreshOtsu,0,255,Imgproc.THRESH_OTSU);
+
+        //showResult(labThreshBinary);
 
         /*Otsu threshold will usually do a good job of segmenting the cubes from the rest of the
         image (as they contrast heavily with the background), but does not function well when there
@@ -84,7 +96,12 @@ public class GoldMine1 {
         Mat thresholded = new Mat();
         Imgproc.distanceTransform(labThresh,distanceTransform,Imgproc.DIST_L2,3);
         distanceTransform.convertTo(distanceTransform,CvType.CV_8UC1);
-        Imgproc.threshold(distanceTransform,thresholded,0,255,Imgproc.THRESH_OTSU);
+        Core.MinMaxLocResult minMaxLocResult = Core.minMaxLoc(distanceTransform);
+        Imgproc.threshold(distanceTransform,thresholded,minMaxLocResult.maxVal/15,255,Imgproc.THRESH_BINARY);
+
+        showResult(thresholded);
+
+        //showResult(thresholded);
 
         //Removes used images from memory to avoid overflow crashes
         distanceTransform.release();
@@ -103,6 +120,7 @@ public class GoldMine1 {
             shape.release();
         }
 
+        //showResult(labThresh);
         //Removes used images from memory to avoid overflow crashes
         labThresh.release();
 
@@ -179,7 +197,7 @@ public class GoldMine1 {
 
         //Prints result to the screen, only used for testing purposes
         Imgproc.cvtColor(inputFrame,inputFrame,Imgproc.COLOR_BGR2RGBA);
-        //showResult(inputFrame);
+        showResult(inputFrame);
 
         //Empties the cosmic garbage can
         System.gc();
