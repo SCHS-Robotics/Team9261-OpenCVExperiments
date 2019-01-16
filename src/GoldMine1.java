@@ -17,7 +17,7 @@ public class GoldMine1 {
 
         String filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\40108068_320820165353263_2733329782681540191_n.jpg";
         filename = "C:\\Users\\Cole Savage\\Desktop\\20180910_095634.jpg";
-        filename = "C:\\Users\\Cole Savage\\Desktop\\20180910_094912.jpg";
+        //filename = "C:\\Users\\Cole Savage\\Desktop\\20180910_094912.jpg";
         //filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\b.jpg";
 
         Mat inputFrame = Imgcodecs.imread(filename); //Reads in image from file, only used for testing purposes
@@ -84,7 +84,8 @@ public class GoldMine1 {
         Mat thresholded = new Mat();
         Imgproc.distanceTransform(labThresh,distanceTransform,Imgproc.DIST_L2,3);
         distanceTransform.convertTo(distanceTransform,CvType.CV_8UC1);
-        Imgproc.threshold(distanceTransform,thresholded,0,255,Imgproc.THRESH_OTSU);
+        Core.MinMaxLocResult minMaxLocResult = Core.minMaxLoc(distanceTransform);
+        Imgproc.threshold(distanceTransform,thresholded,minMaxLocResult.maxVal/15,255,Imgproc.THRESH_BINARY);
 
         //Removes used images from memory to avoid overflow crashes
         distanceTransform.release();
@@ -106,6 +107,9 @@ public class GoldMine1 {
         //Removes used images from memory to avoid overflow crashes
         labThresh.release();
 
+        //Imgproc.bilateralFilter(masked,dst,5,5,5);
+        Imgproc.GaussianBlur(masked,masked,new Size(5,5),0);
+
         //Calculates the median value of the image
         double med = getMedian(masked);
 
@@ -115,8 +119,13 @@ public class GoldMine1 {
         double sigma = 0.33;
         Imgproc.Canny(masked,edges,(int) Math.round(Math.max(0,(1-sigma)*med)),(int) Math.round(Math.min(255,1+sigma)*med));
 
+
+        showResult(masked);
+
         //Enhances edge information
-        Imgproc.dilate(edges,edges,Imgproc.getStructuringElement(Imgproc.MORPH_CROSS,new Size(5,5)),new Point(),2);
+        Imgproc.dilate(edges,edges,Imgproc.getStructuringElement(Imgproc.MORPH_CROSS,new Size(2,2)),new Point(),2);
+
+        showResult(edges);
 
         //Turns edges into a list of shapes
         List<MatOfPoint> contours = new ArrayList<>();
