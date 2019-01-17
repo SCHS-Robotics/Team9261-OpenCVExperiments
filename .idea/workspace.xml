@@ -1,28 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e3087684-9b78-498b-aaf8-eb342ea29b5d" name="Default Changelist" comment="Added SilverMine program">
+    <list default="true" id="e3087684-9b78-498b-aaf8-eb342ea29b5d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/DetectPictograph.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/DetectPictograph.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/FeatureMatcherTest.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/FeatureMatcherTest.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/FeatureMatcherTestOptimized.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/FeatureMatcherTestOptimized.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/GoldMine0.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/GoldMine0.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/GoldMine1.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/GoldMine1.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/HSVTest.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/HSVTest.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/KMedioids.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/KMedioids.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Line.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Line.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/MainClass.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/MainClass.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test1.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test1.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test2.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test2.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test3$1.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test3$1.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test3$2.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test3$2.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test3$3.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test3$3.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test3.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test3.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/VideoTest.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/VideoTest.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/svmtest.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/svmtest.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/temp1.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/temp1.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/test.class" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/test.class" />
       <change beforePath="$PROJECT_DIR$/src/GoldMine1.java" afterPath="$PROJECT_DIR$/src/GoldMine1.java" />
+      <change beforePath="$PROJECT_DIR$/src/svmtest.java" afterPath="$PROJECT_DIR$/src/svmtest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -50,8 +32,8 @@
       <file leaf-file-name="GoldMine1.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GoldMine1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="110" column="60" lean-forward="false" selection-start-line="110" selection-start-column="60" selection-end-line="110" selection-end-column="60" />
+            <state relative-caret-position="68">
+              <caret line="84" column="60" lean-forward="true" selection-start-line="84" selection-start-column="60" selection-end-line="84" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -98,12 +80,14 @@
         <option value="$PROJECT_DIR$/src/Line.java" />
         <option value="$PROJECT_DIR$/src/FeatureDetection.java" />
         <option value="$PROJECT_DIR$/src/SilverMine.java" />
+        <option value="$PROJECT_DIR$/src/svmtest.java" />
         <option value="$PROJECT_DIR$/src/GoldMine1.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="690" />
+    <option name="x" value="574" />
+    <option name="y" value="123" />
     <option name="width" value="1402" />
     <option name="height" value="803" />
   </component>
@@ -157,6 +141,24 @@
             <path>
               <item name="Team9261-OpenCVExperiments" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="Team9261-OpenCVExperiments" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="opencv-401.jar" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Team9261-OpenCVExperiments" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="opencv-401.jar" type="462c0819:PsiDirectoryNode" />
+              <item name="opencv" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Team9261-OpenCVExperiments" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="opencv-401.jar" type="462c0819:PsiDirectoryNode" />
+              <item name="opencv" type="462c0819:PsiDirectoryNode" />
+              <item name="ml" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -249,18 +251,34 @@
       <module name="9261-LevelUp-OpenCVExperiments" />
       <envs />
     </configuration>
-    <list size="4">
+    <configuration name="svmtest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="svmtest" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="9261-LevelUp-OpenCVExperiments" />
+      <envs />
+    </configuration>
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Application.FeatureMatcherTest" />
       <item index="1" class="java.lang.String" itemvalue="Application.RetinaTest" />
       <item index="2" class="java.lang.String" itemvalue="Application.GoldMine1" />
       <item index="3" class="java.lang.String" itemvalue="Application.SilverMine" />
+      <item index="4" class="java.lang.String" itemvalue="Application.svmtest" />
     </list>
     <recent_temporary>
-      <list size="4">
+      <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Application.GoldMine1" />
-        <item index="1" class="java.lang.String" itemvalue="Application.SilverMine" />
-        <item index="2" class="java.lang.String" itemvalue="Application.FeatureMatcherTest" />
-        <item index="3" class="java.lang.String" itemvalue="Application.RetinaTest" />
+        <item index="1" class="java.lang.String" itemvalue="Application.svmtest" />
+        <item index="2" class="java.lang.String" itemvalue="Application.SilverMine" />
+        <item index="3" class="java.lang.String" itemvalue="Application.FeatureMatcherTest" />
+        <item index="4" class="java.lang.String" itemvalue="Application.RetinaTest" />
       </list>
     </recent_temporary>
   </component>
@@ -320,11 +338,18 @@
       <option name="project" value="LOCAL" />
       <updated>1547176038151</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Corrections">
+      <created>1547681929147</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1547681929147</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="690" y="0" width="1402" height="803" extended-state="0" />
+    <frame x="574" y="123" width="1402" height="803" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -369,7 +394,8 @@
     <MESSAGE value="Minor bugfixes and improvements" />
     <MESSAGE value="Merging tests from a second source" />
     <MESSAGE value="Added SilverMine program" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added SilverMine program" />
+    <MESSAGE value="Corrections" />
+    <option name="LAST_COMMIT_MESSAGE" value="Corrections" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -660,14 +686,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/svmtest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="40" column="37" lean-forward="true" selection-start-line="40" selection-start-column="37" selection-end-line="40" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/SilverMine.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -676,10 +694,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/svmtest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1347">
+          <caret line="145" column="37" lean-forward="false" selection-start-line="145" selection-start-column="37" selection-end-line="145" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/GoldMine1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="110" column="60" lean-forward="false" selection-start-line="110" selection-start-column="60" selection-end-line="110" selection-end-column="60" />
+        <state relative-caret-position="68">
+          <caret line="84" column="60" lean-forward="true" selection-start-line="84" selection-start-column="60" selection-end-line="84" selection-end-column="60" />
           <folding />
         </state>
       </provider>

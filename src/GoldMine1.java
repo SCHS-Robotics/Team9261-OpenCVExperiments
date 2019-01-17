@@ -19,7 +19,7 @@ public class GoldMine1 {
         filename = "C:\\Users\\Cole Savage\\Desktop\\20180910_095634.jpg";
         //filename = "C:\\Users\\Cole Savage\\Desktop\\20180910_094912.jpg";
         //filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\b.jpg";
-
+        filename = "C:\\Users\\Cole Savage\\Desktop\\IMG-1744.jpg";
         Mat inputFrame = Imgcodecs.imread(filename); //Reads in image from file, only used for testing purposes
         Imgproc.resize(inputFrame,inputFrame,new Size(inputFrame.size().width/4,inputFrame.size().height/4)); //Reduces image size for speed
         Imgproc.cvtColor(inputFrame,inputFrame,Imgproc.COLOR_BGR2RGBA); //Converts input image from BGR to RGBA, only used for testing purposes
@@ -84,9 +84,12 @@ public class GoldMine1 {
         Mat thresholded = new Mat();
         Imgproc.distanceTransform(labThresh,distanceTransform,Imgproc.DIST_L2,3);
         distanceTransform.convertTo(distanceTransform,CvType.CV_8UC1);
-        Core.MinMaxLocResult minMaxLocResult = Core.minMaxLoc(distanceTransform);
-        Imgproc.threshold(distanceTransform,thresholded,minMaxLocResult.maxVal/15,255,Imgproc.THRESH_BINARY);
 
+        double stdm[] = calcStdDevMean(distanceTransform);
+
+        Imgproc.threshold(distanceTransform,thresholded,stdm[1],255,Imgproc.THRESH_BINARY);
+
+        showResult(thresholded);
         //Removes used images from memory to avoid overflow crashes
         distanceTransform.release();
 
