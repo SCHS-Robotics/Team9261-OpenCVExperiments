@@ -17,9 +17,9 @@ public class GoldMine1 {
 
         String filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\40108068_320820165353263_2733329782681540191_n.jpg";
         filename = "C:\\Users\\Cole Savage\\Desktop\\20180910_095634.jpg";
-        //filename = "C:\\Users\\Cole Savage\\Desktop\\20180910_094912.jpg";
+        filename = "C:\\Users\\Cole Savage\\Desktop\\20180910_094912.jpg";
         //filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\b.jpg";
-        filename = "C:\\Users\\Cole Savage\\Desktop\\IMG-1744.jpg";
+        //filename = "C:\\Users\\Cole Savage\\Desktop\\IMG-1744.jpg";
         Mat inputFrame = Imgcodecs.imread(filename); //Reads in image from file, only used for testing purposes
         Imgproc.resize(inputFrame,inputFrame,new Size(inputFrame.size().width/4,inputFrame.size().height/4)); //Reduces image size for speed
         Imgproc.cvtColor(inputFrame,inputFrame,Imgproc.COLOR_BGR2RGBA); //Converts input image from BGR to RGBA, only used for testing purposes
@@ -47,7 +47,8 @@ public class GoldMine1 {
         The Otsu threshold does the same thing as the binary threshold, but tries to dynamically
         select the threshold value (the value above which a pixel is considered yellow) to divide the
         image by contrast. The binary threshold is very inclusive, for reasons that will become clear later*/
-        Imgproc.threshold(bChan,labThreshBinary,145,255,Imgproc.THRESH_BINARY);
+        Imgproc.threshold(bChan,labThreshBinary,170,255,Imgproc.THRESH_BINARY);
+        showResult(labThreshBinary);
         Imgproc.threshold(bChan,labThreshOtsu,0,255,Imgproc.THRESH_OTSU);
 
         /*Otsu threshold will usually do a good job of segmenting the cubes from the rest of the
@@ -89,7 +90,7 @@ public class GoldMine1 {
 
         Imgproc.threshold(distanceTransform,thresholded,stdm[1],255,Imgproc.THRESH_BINARY);
 
-        showResult(thresholded);
+        //showResult(thresholded);
         //Removes used images from memory to avoid overflow crashes
         distanceTransform.release();
 
@@ -123,12 +124,12 @@ public class GoldMine1 {
         Imgproc.Canny(masked,edges,(int) Math.round(Math.max(0,(1-sigma)*med)),(int) Math.round(Math.min(255,1+sigma)*med));
 
 
-        showResult(masked);
+        //showResult(masked);
 
         //Enhances edge information
         Imgproc.dilate(edges,edges,Imgproc.getStructuringElement(Imgproc.MORPH_CROSS,new Size(2,2)),new Point(),2);
 
-        showResult(edges);
+        //showResult(edges);
 
         //Turns edges into a list of shapes
         List<MatOfPoint> contours = new ArrayList<>();
