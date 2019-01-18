@@ -11,18 +11,18 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoldMine1 {
+public class GoldMineVideoProcess {
     static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
-    public static void main (String args[]) {
+    public static Point main (Mat input) {
 
         String filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\40108068_320820165353263_2733329782681540191_n.jpg";
         filename = "C:\\Users\\Cole Savage\\Desktop\\20180910_095634.jpg";
         filename = "C:\\Users\\Cole Savage\\Desktop\\20180910_094912.jpg";
         //filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\b.jpg";
         filename = "C:\\Users\\Cole Savage\\Desktop\\IMG-1744.jpg";
-        Mat input = Imgcodecs.imread(filename); //Reads in image from file, only used for testing purposes
+        //Mat input = Imgcodecs.imread(filename); //Reads in image from file, only used for testing purposes
         Imgproc.resize(input,input,new Size(input.size().width/4,input.size().height/4)); //Reduces image size for speed
-        Imgproc.cvtColor(input,input,Imgproc.COLOR_BGR2RGBA); //Converts input image from BGR to RGBA, only used for testing purposes
+        //Imgproc.cvtColor(input,input,Imgproc.COLOR_BGR2RGBA); //Converts input image from BGR to RGBA, only used for testing purposes
 
         //Defines all Mats that will be used in the program
         Mat lab = new Mat();
@@ -35,7 +35,7 @@ public class GoldMine1 {
 
         //Converts input from RGB color format to Lab color format, then extracts the b channel
         //Lab is based on the opponent color model, and the b channel represents the blue-yellow axis, so it will be useful in finding yellow colors
-        Imgproc.cvtColor(input,lab,Imgproc.COLOR_RGB2Lab);
+        Imgproc.cvtColor(input,lab,Imgproc.COLOR_BGR2Lab);
         Core.extractChannel(lab,bChan,2);
 
         //Removes used images from memory to avoid overflow crashes
@@ -61,6 +61,8 @@ public class GoldMine1 {
         which accounts for times when the cube is not in the image while keeping the otsu threshold's power*/
         Core.bitwise_and(labThreshBinary,labThreshOtsu,labThresh);
 
+        //showResult(labThresh);
+
         //showResult(labThreshOtsu);
 
         //Removes used images from memory to avoid overflow crashes
@@ -71,7 +73,7 @@ public class GoldMine1 {
         //Converts input from RGB color format to HSV color format, then extracts the h channel
         //HSV stands for hue, saturation, value. We are only interested in the h channel, which stores color information
         //Because of its division of color into a separate channel, HSV format is resistant to lighting changes and so is good for color filtering
-        Imgproc.cvtColor(input,hsv,Imgproc.COLOR_RGB2HSV_FULL);
+        Imgproc.cvtColor(input,hsv,Imgproc.COLOR_BGR2HSV_FULL);
         Core.extractChannel(hsv,hChan,0);
 
         //Masks image so that the only h regions detected are those that were also detected by the Lab otsu and binary thresholds
@@ -101,7 +103,7 @@ public class GoldMine1 {
 
         Imgproc.threshold(distanceTransform,thresholded,stdm[1]/stdm[0],255,Imgproc.THRESH_BINARY);
 
-        showResult(thresholded);
+        //showResult(thresholded);
 
         //showResult(thresholded);
         //Removes used images from memory to avoid overflow crashes
@@ -151,6 +153,8 @@ public class GoldMine1 {
         //Removes used images from memory to avoid overflow crashes
         edges.release();
 
+        double maxSize = 0;
+        Point maxCenter = new Point();
         //Loops through the list of shapes (contours) and finds the ones most likely to be a cube
         for (int i = 0; i < contours.size(); i++) {
             //Approximates the shape to smooth out excess edges
@@ -189,6 +193,11 @@ public class GoldMine1 {
                                 if (approx.toList().size() == 4 || approx.toList().size() == 6) {
                                     //Draws shape to screen
                                     Imgproc.drawContours(input, contours, i, new Scalar(0, 255, 0), 9);
+                                    if(Imgproc.contourArea(contours.get(i))>maxSize) {
+                                        Moments moments = Imgproc.moments(contours.get(i));
+                                        maxCenter = new Point(moments.m10/moments.m00,moments.m01/moments.m00);
+                                        maxSize = Imgproc.contourArea(contours.get(i));
+                                    }
                                 }
                             }
                         }
@@ -204,11 +213,13 @@ public class GoldMine1 {
         masked.release();
 
         //Prints result to the screen, only used for testing purposes
-        Imgproc.cvtColor(input,input,Imgproc.COLOR_BGR2RGBA);
-        showResult(input);
+        //Imgproc.cvtColor(input,input,Imgproc.COLOR_BGR2RGBA);
+        //showResult(input);
 
         //Empties the cosmic garbage can
         System.gc();
+
+        return maxCenter;
     }
 
     //Prints result to the screen, only used for testing purposes
