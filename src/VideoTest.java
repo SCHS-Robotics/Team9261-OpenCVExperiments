@@ -47,7 +47,7 @@ public class VideoTest {
         for (;;) {
             Point p = GoldMineVideoProcess.main(mat);
 
-            if((p.x != 0 || p.y != 0) && System.currentTimeMillis()-startTime < 20000) {
+            if((p.x != 0 || p.y != 0)) {
                 kalmanTracker.update(p,true);
 
             }
