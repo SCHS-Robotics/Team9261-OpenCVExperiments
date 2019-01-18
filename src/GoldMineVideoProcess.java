@@ -98,8 +98,8 @@ public class GoldMineVideoProcess {
 
         double stdm[] = calcStdDevMean(distanceTransform,msk);
 
-        System.out.println(stdm[1]);
-        System.out.println(stdm[0]);
+        //System.out.println(stdm[1]);
+        //System.out.println(stdm[0]);
 
         Imgproc.threshold(distanceTransform,thresholded,stdm[1]/stdm[0],255,Imgproc.THRESH_BINARY);
 

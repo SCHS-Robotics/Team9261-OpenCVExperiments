@@ -43,10 +43,21 @@ public class VideoTest {
 
         KalmanTracker kalmanTracker = new KalmanTracker(new Point(0,0));
 
+        long startTime = System.currentTimeMillis();
         for (;;) {
-            kalmanTracker.update(GoldMineVideoProcess.main(mat),true);
+            Point p = GoldMineVideoProcess.main(mat);
+
+            if((p.x != 0 || p.y != 0) && System.currentTimeMillis()-startTime < 20000) {
+                kalmanTracker.update(p,true);
+
+            }
 
             Point prediction = kalmanTracker.getPrediction();
+
+            System.out.println(p.x);
+            System.out.println(prediction.x);
+            System.out.println(System.currentTimeMillis()-startTime);
+            System.out.println();
 
             Imgproc.circle(mat,prediction,5,new Scalar(0,0,255),-1);
 

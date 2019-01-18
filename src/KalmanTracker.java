@@ -5,7 +5,7 @@ public class KalmanTracker {
     static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
     public PointState state;
 
-    private Point lastResult;
+    public Point lastResult;
     private KalmanFilter kf;
 
     private int totalUpdates;
@@ -55,6 +55,8 @@ public class KalmanTracker {
         totalUpdates = 0;
     }
 
+
+    //dataCorrect = "is the data correct or not?" updates it with last known result if data is incorrect, otherwise updates it with current result
     public Point update(Point p, boolean dataCorrect) {
         Mat measurement = new Mat(2, 1, CvType.CV_32F, new Scalar(0)) ;
 
@@ -72,7 +74,7 @@ public class KalmanTracker {
             trustworthyness = (1+trustworthyness)/totalUpdates;
         }
         // Correction
-        Mat estimated = kf.correct(measurement);
+        Mat estimated = kf.correct(measurement); //updates predicted state from the measurement
         lastResult.x = estimated.get(0, 0)[0];
         lastResult.y = estimated.get(1, 0)[0];
         return lastResult;
