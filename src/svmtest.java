@@ -5,6 +5,8 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.ml.LogisticRegression;
 import org.opencv.ml.Ml;
 import org.opencv.objdetect.HOGDescriptor;
+import org.opencv.xfeatures2d.SIFT;
+import org.opencv.xfeatures2d.SURF;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,7 +21,7 @@ public class svmtest {
     static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
     public static void main(String[] args){
 
-        String DATABASEPos = "C:\\TrainingArena\\yalefaces\\yaleB11\\t";
+        String DATABASEPos = "C:\\TrainingArena\\yalefaces\\yaleB11";
         String DATABASENeg = "C:\\TrainingArena\\neg";
 
         //List initialization
@@ -34,7 +36,9 @@ public class svmtest {
 
         HOGDescriptor hog = new HOGDescriptor(new Size(320,240),new Size(40,30),new Size(20,15), new Size(40,30),16);
 
-        int numImages = 250;
+        SIFT sift = SIFT.create();
+
+        int numImages = 250/2;
         int negLabel = 0;
         int posLabel = 1;
         Size winStride = new Size(128,128);
@@ -108,7 +112,11 @@ public class svmtest {
 
     private static void loadData(File[] directory, HOGDescriptor hog, int label, Mat data, List<Integer> labels_array, int numImages, Size winStride, Size padding, int start) {
         for(int i = start; i < start+numImages; i++){
+
             Mat image = Imgcodecs.imread(directory[i].getAbsolutePath(),Imgcodecs.IMREAD_UNCHANGED); //for each file, read the image
+
+            System.out.println(directory[i].getName());
+
             Mat training_feature = new MatOfFloat();
             MatOfPoint locations = new MatOfPoint();
             MatOfFloat a = new MatOfFloat();
@@ -118,24 +126,24 @@ public class svmtest {
             locations.release();
             data.push_back(training_feature);
 
-            System.out.println(training_feature.dump());
+            //System.out.println(training_feature.dump());
 
             training_feature.release();
 
             labels_array.add(label);
-            System.out.println(100*(((i+1)*1.0)/(start+numImages*1.0))+"%");
+            System.out.println(Math.round(100*100*(((i+1)*1.0)/(start+numImages*1.0)))/100.0+"%");
             image.release();
             System.gc();
         }
     }
 
     private static Mat getDescriptors(Mat image) {
-        ORB detector = ORB.create();
+        SURF detector = SURF.create();
 
         MatOfKeyPoint kp = new MatOfKeyPoint();
 
         detector.detect(image,kp);
-        ORB extractor = ORB.create(); //SURF, someday...;
+        SURF extractor = SURF.create(); //SURF, someday...;
 
         Mat desc = new MatOfFloat();
 
