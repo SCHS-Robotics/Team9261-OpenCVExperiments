@@ -1,3 +1,4 @@
+import org.opencv.bioinspired.Retina;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
@@ -16,12 +17,19 @@ public class GoldMine1 {
     public static void main (String args[]) {
 
         String filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\40108068_320820165353263_2733329782681540191_n.jpg";
-        filename = "C:\\Users\\Cole Savage\\Desktop\\20180910_095634.jpg";
-        filename = "C:\\Users\\Cole Savage\\Desktop\\20180910_094912.jpg";
-        //filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\b.jpg";
-        //filename = "C:\\Users\\Cole Savage\\Desktop\\IMG-1733.jpg";
+        filename = "C:\\Users\\coles\\Desktop\\Data\\20180910_095634.jpg";
+        //filename = "C:\\Users\\coles\\Desktop\\Data\\20180910_094912.jpg";
+        //filename = "C:\\Users\\coles\\Desktop\\Data\\b.jpg";
+        //filename = "C:\\Users\\coles\\Desktop\\Data\\failure\\IMG-1735.jpg";
         Mat input = Imgcodecs.imread(filename); //Reads in image from file, only used for testing purposes
         Imgproc.resize(input,input,new Size(input.size().width/4,input.size().height/4)); //Reduces image size for speed
+
+        Retina retina = Retina.create(input.size());
+        retina.setup("C:\\Users\\coles\\Desktop\\Data\\RetinaParams2.xml");
+        retina.clearBuffers();
+
+        retina.applyFastToneMapping(input,input);
+
         Imgproc.cvtColor(input,input,Imgproc.COLOR_BGR2RGBA); //Converts input image from BGR to RGBA, only used for testing purposes
 
         //Defines all Mats that will be used in the program
@@ -50,7 +58,7 @@ public class GoldMine1 {
 
         double stdm1[] = calcStdDevMean(bChan);
 
-        Imgproc.threshold(bChan,labThreshBinary,145,255,Imgproc.THRESH_BINARY);
+        Imgproc.threshold(bChan,labThreshBinary,160,255,Imgproc.THRESH_BINARY);
         Imgproc.threshold(bChan,labThreshOtsu,0,255,Imgproc.THRESH_OTSU);
 
         showResult(labThreshBinary);
@@ -63,7 +71,7 @@ public class GoldMine1 {
         which accounts for times when the cube is not in the image while keeping the otsu threshold's power*/
         Core.bitwise_and(labThreshBinary,labThreshOtsu,labThresh);
 
-        //showResult(labThreshOtsu);
+        showResult(labThreshOtsu);
 
         //Removes used images from memory to avoid overflow crashes
         bChan.release();
@@ -91,9 +99,9 @@ public class GoldMine1 {
         Core.bitwise_and(temp2,sChan,temp2);
 
         double stdm2[] = calcStdDevMean(temp2);
-        Imgproc.threshold(temp2,temp2,stdm2[1]+stdm2[0]*1.5,255,Imgproc.THRESH_BINARY);
+        Imgproc.threshold(temp2,temp2,stdm2[1]+1.5*stdm2[0],255,Imgproc.THRESH_BINARY);
 
-        showResult(sChan);
+        //showResult(sChan);
         showResult(temp2);
 
         Core.bitwise_and(temp2,labThresh,labThresh);
@@ -124,7 +132,7 @@ public class GoldMine1 {
 
         Imgproc.threshold(distanceTransform,thresholded,stdm[1]/stdm[0],255,Imgproc.THRESH_BINARY);
 
-        showResult(thresholded);
+        //showResult(thresholded);
 
         //showResult(thresholded);
         //Removes used images from memory to avoid overflow crashes
