@@ -20,7 +20,7 @@ public class GoldMine1 {
         filename = "C:\\Users\\coles\\Desktop\\Data\\20180910_095634.jpg";
         filename = "C:\\Users\\coles\\Desktop\\Data\\20180910_094912.jpg";
         //filename = "C:\\Users\\coles\\Desktop\\Data\\b.jpg";
-        filename = "C:\\Users\\coles\\Desktop\\Data\\failure\\IMG-1738.jpg";
+        filename = "C:\\Users\\coles\\Desktop\\Data\\failure\\IMG-1734.jpg";
         Mat input = Imgcodecs.imread(filename); //Reads in image from file, only used for testing purposes
         Imgproc.resize(input, input, new Size(320, (int) Math.round((320/input.size().width)*input.size().height))); //Reduces image size for speed
 
@@ -110,7 +110,7 @@ public class GoldMine1 {
 
         Core.bitwise_and(temp2,sChan,temp2);
 
-        Imgproc.medianBlur(temp2,temp2,9);
+        //Imgproc.medianBlur(temp2,temp2,9);
 
         showResult(temp2);
 
@@ -431,17 +431,17 @@ public class GoldMine1 {
         Mat sorted = new Mat();
         Core.sort(rowMat,sorted,Core.SORT_ASCENDING);
 
-        System.out.println(sorted.size());
-
         double sum = 0;
         int idx = 0;
-        while(sum == 0) {
-            sum+=sorted.get(0,idx)[0];
-            idx+=sorted.get(0,idx)[0] > 0 ? 1 : 0;
+        int loops = 0;
+        while(sum == 0 && loops < sorted.cols()) {
+            sum+=sorted.get(0,loops)[0];
+            idx+=sorted.get(0,loops)[0] > 0 ? 1 : 0;
+            loops++;
         }
 
         //Calculates median of the image. Median is the middle value of the row of sorted pixels. If there are two middle pixels, the median is their average.
-        double median = (sorted.size().width-idx) % 2 == 1 ? sorted.get(0,(int) Math.floor(idx+((sorted.size().width-idx)/2)))[0] : (sorted.get(0,(int) (idx+(sorted.size().width-idx)/2)-1)[0]+sorted.get(0,(int) (idx+(sorted.size().width-idx)/2))[0])/2;
+        double median = (sum != 0 ) ? ((sorted.size().width-idx) % 2 == 1 ? sorted.get(0,(int) Math.floor(idx+((sorted.size().width-idx)/2)))[0] : (sorted.get(0,(int) (idx+(sorted.size().width-idx)/2)-1)[0]+sorted.get(0,(int) (idx+(sorted.size().width-idx)/2))[0])/2) : 0;
 
         //Removes used images from memory to avoid overflow crashes
         rowMat.release();
