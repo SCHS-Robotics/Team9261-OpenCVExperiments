@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3087684-9b78-498b-aaf8-eb342ea29b5d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/GoldMine2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/LocalMaximaTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/GoldMine1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/GoldMine1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GoldMine1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GoldMine1.java" afterDir="false" />
@@ -36,11 +38,32 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GoldMine1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5559">
-              <caret line="26" column="52" lean-forward="true" selection-start-line="26" selection-start-column="52" selection-end-line="26" selection-end-column="52" />
+            <state relative-caret-position="556">
+              <caret line="275" column="97" selection-start-line="275" selection-start-column="30" selection-end-line="275" selection-end-column="97" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/GoldMine2.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="25" column="147" lean-forward="true" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="147" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/LocalMaximaTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="387">
+              <caret line="25" column="27" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -73,9 +96,10 @@
     <findStrings>
       <find>cvt</find>
       <find>convex</find>
-      <find>showResult</find>
       <find>showRes</find>
       <find>medianBlur</find>
+      <find>showResult</find>
+      <find>temp2</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -110,13 +134,15 @@
         <option value="$PROJECT_DIR$/src/KalmanTracker.java" />
         <option value="$PROJECT_DIR$/src/GoldMineVideoProcess.java" />
         <option value="$PROJECT_DIR$/src/VideoTest.java" />
+        <option value="$PROJECT_DIR$/src/LocalMaximaTest.java" />
         <option value="$PROJECT_DIR$/src/GoldMine1.java" />
+        <option value="$PROJECT_DIR$/src/GoldMine2.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="424" />
-    <option name="y" value="94" />
+    <option name="x" value="322" />
+    <option name="y" value="172" />
     <option name="width" value="1402" />
     <option name="height" value="901" />
   </component>
@@ -176,7 +202,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548059764694" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548105958337" />
     <property name="last_opened_file_path" value="$USER_HOME$/opencv_java401.dll" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -203,13 +229,20 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.GoldMine1">
+  <component name="RunManager" selected="Application.GoldMine2">
     <configuration name="GoldMine1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GoldMine1" />
       <module name="9261-LevelUp-OpenCVExperiments" />
       <RunnerSettings RunnerId="Debug with VisualVM">
         <option name="visualVMId" value="186004429163160" />
       </RunnerSettings>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GoldMine2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GoldMine2" />
+      <module name="9261-LevelUp-OpenCVExperiments" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -221,8 +254,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SilverMine" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="SilverMine" />
+    <configuration name="LocalMaximaTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="LocalMaximaTest" />
       <module name="9261-LevelUp-OpenCVExperiments" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -235,27 +268,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="svmtest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="svmtest" />
-      <module name="9261-LevelUp-OpenCVExperiments" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Application.GoldMine1" />
       <item itemvalue="Application.JPanelOpenCV" />
-      <item itemvalue="Application.SilverMine" />
       <item itemvalue="Application.VideoTest" />
-      <item itemvalue="Application.svmtest" />
+      <item itemvalue="Application.LocalMaximaTest" />
+      <item itemvalue="Application.GoldMine2" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.GoldMine2" />
         <item itemvalue="Application.GoldMine1" />
+        <item itemvalue="Application.LocalMaximaTest" />
         <item itemvalue="Application.VideoTest" />
         <item itemvalue="Application.JPanelOpenCV" />
-        <item itemvalue="Application.svmtest" />
-        <item itemvalue="Application.SilverMine" />
       </list>
     </recent_temporary>
   </component>
@@ -368,12 +394,18 @@
       <option name="project" value="LOCAL" />
       <updated>1548051128638</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Fixed masks and added a new mask. Block filtering is probably still broken though">
+      <created>1548059930057</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1548059930057</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="424" y="94" width="1402" height="901" extended-state="0" />
-    <editor active="true" />
+    <frame x="322" y="172" width="1402" height="901" extended-state="0" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26080477" />
       <window_info id="Structure" order="1" weight="0.25" />
@@ -383,16 +415,16 @@
       <window_info id="UI Designer" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info id="Learn" order="7" weight="0.32995737" />
-      <window_info active="true" anchor="bottom" id="JProfiler" sideWeight="0.49925485" visible="true" weight="0.32885906" />
+      <window_info anchor="bottom" id="JProfiler" sideWeight="0.49925485" weight="0.32885906" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49946696" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49776453" weight="0.18791947" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49925485" weight="0.4" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4962742" visible="true" weight="0.18791947" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49850968" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.3298351" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5007452" side_tool="true" visible="true" weight="0.32885906" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50372577" side_tool="true" weight="0.18791947" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" />
       <window_info anchor="bottom" id="Run with VisualVM" order="11" sideWeight="0.49850968" weight="0.32885906" />
@@ -409,26 +441,28 @@
       <window_info anchor="right" id="Maven" order="9" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16642012" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26080477" />
+      <window_info id="Structure" order="1" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info id="Learn" order="7" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.21744792" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="JProfiler" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32900432" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.3294271" />
+      <window_info id="Learn" order="7" weight="0.32995737" />
+      <window_info anchor="bottom" id="JProfiler" order="0" sideWeight="0.49925485" weight="0.32885906" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Find" order="2" sideWeight="0.49946696" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.4962742" visible="true" weight="0.18791947" />
+      <window_info anchor="bottom" id="Debug" order="4" sideWeight="0.49850968" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.3298351" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50372577" side_tool="true" visible="true" weight="0.18791947" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="Messages" order="11" />
+      <window_info anchor="bottom" id="Run with VisualVM" order="12" sideWeight="0.49850968" weight="0.32885906" />
+      <window_info anchor="bottom" id="Debug with VisualVM" order="13" sideWeight="0.49925485" weight="0.32885906" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -437,7 +471,8 @@
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="right" id="Maven Projects" order="7" />
-      <window_info anchor="right" id="Maven" order="8" />
+      <window_info anchor="right" id="Coverage" order="8" side_tool="true" visible="true" weight="0.0" />
+      <window_info anchor="right" id="Maven" order="9" />
     </layout-to-restore>
   </component>
   <component name="VcsManagerConfiguration">
@@ -458,17 +493,10 @@
     <MESSAGE value="removed track time limit" />
     <MESSAGE value="updated filter settings" />
     <MESSAGE value="this was an oof, trying to fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="this was an oof, trying to fix" />
+    <MESSAGE value="Fixed masks and added a new mask. Block filtering is probably still broken though" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed masks and added a new mask. Block filtering is probably still broken though" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/KMedioids.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1190">
-          <caret line="75" column="13" selection-start-line="75" selection-start-column="13" selection-end-line="75" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/OneDrive/Desktop/buildspace/contribbuild/install/java/opencv-401.jar!/org/opencv/xfeatures2d/DAISY.java" />
     <entry file="jar://$USER_HOME$/OneDrive/Desktop/buildspace/contribbuild/install/java/opencv-401.jar!/org/opencv/features2d/Feature2D.java" />
     <entry file="jar://$USER_HOME$/OneDrive/Desktop/buildspace/contribbuild/install/java/opencv-401.jar!/org/opencv/xfeatures2d/VGG.java" />
     <entry file="jar://$USER_HOME$/OneDrive/Desktop/buildspace/contribbuild/install/java/opencv-401.jar!/org/opencv/xfeatures2d/FREAK.java" />
@@ -716,16 +744,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RetinaTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="16" column="45" selection-start-line="16" selection-start-column="45" selection-end-line="16" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/HSVTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -736,13 +754,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GoldMine1.java">
+    <entry file="file://$PROJECT_DIR$/src/LocalMaximaTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5559">
-          <caret line="26" column="52" lean-forward="true" selection-start-line="26" selection-start-column="52" selection-end-line="26" selection-end-column="52" />
+        <state relative-caret-position="387">
+          <caret line="25" column="27" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RetinaTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="16" column="45" selection-start-line="16" selection-start-column="45" selection-end-line="16" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GoldMine1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="556">
+          <caret line="275" column="97" selection-start-line="275" selection-start-column="30" selection-end-line="275" selection-end-column="97" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GoldMine2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="25" column="147" lean-forward="true" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="147" />
         </state>
       </provider>
     </entry>

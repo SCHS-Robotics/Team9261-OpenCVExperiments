@@ -12,15 +12,16 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoldMine1 {
+public class GoldMine2 {
     static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
     public static void main (String args[]) {
 
         String filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\40108068_320820165353263_2733329782681540191_n.jpg";
         filename = "C:\\Users\\coles\\Desktop\\Data\\20180910_095634.jpg";
-        //filename = "C:\\Users\\coles\\Desktop\\Data\\20180910_094912.jpg";
-        //filename = "C:\\Users\\coles\\Desktop\\Data\\b.jpg";
-        filename = "C:\\Users\\coles\\Desktop\\Data\\failure\\IMG-1747.jpg";
+        //filename = "C:\\Users\\coles\\Desktop\\Data\\unnamed1.jpg";
+        filename = "C:\\Users\\coles\\Desktop\\Data\\20180910_094912.jpg";
+        filename = "C:\\Users\\coles\\Desktop\\Data\\b.jpg";
+        filename = "C:\\Users\\coles\\Desktop\\Data\\failure\\IMG-1746.jpg";
         Mat input = Imgcodecs.imread(filename); //Reads in image from file, only used for testing purposes
         Imgproc.resize(input, input, new Size(320, (int) Math.round((320/input.size().width)*input.size().height))); //Reduces image size for speed
 
@@ -36,12 +37,9 @@ public class GoldMine1 {
         Core.extractChannel(yuv,uChan,1);
         Mat b = new Mat();
         Imgproc.medianBlur(uChan,uChan,9);
-        //Imgproc.filter2D(uChan,uChan,-1,Imgproc.getStructuringElement(Imgproc.MORPH_RECT,new Size(1,1)));
-        //showResult(b);
-        //showResult(uChan);
         Mat a = new Mat();
         Imgproc.threshold(uChan,a,145,255,Imgproc.THRESH_BINARY);
-        showResult(a);
+
 
         Imgproc.cvtColor(input,input,Imgproc.COLOR_BGR2RGBA); //Converts input image from BGR to RGBA, only used for testing purposes
 
@@ -54,13 +52,23 @@ public class GoldMine1 {
         Mat hChan = new Mat();
         Mat bChan = new Mat();
 
+        Imgproc.cvtColor(input,hsv,Imgproc.COLOR_RGB2HSV_FULL);
+        Core.extractChannel(hsv,hChan,0);
+
+
+        Mat sChan = new Mat();
+        Core.extractChannel(hsv,sChan,1);
+
+
         //Converts input from RGB color format to Lab color format, then extracts the b channel
         //Lab is based on the opponent color model, and the b channel represents the blue-yellow axis, so it will be useful in finding yellow colors
         Imgproc.cvtColor(input,lab,Imgproc.COLOR_RGB2Lab);
         Core.extractChannel(lab,bChan,2);
 
         //Removes used images from memory to avoid overflow crashes
-        lab.release();
+        //lab.release();
+
+
 
         /*Thresholds the b channel in two different ways to get a binary filter (correct or not correct)
         for all detected yellow pixels
@@ -71,10 +79,20 @@ public class GoldMine1 {
 
         double stdm1[] = calcStdDevMean(bChan);
 
-        Imgproc.threshold(bChan,labThreshBinary,stdm1[1],255,Imgproc.THRESH_BINARY);
-        Imgproc.threshold(bChan,labThreshOtsu,0,255,Imgproc.THRESH_OTSU);
+        Mat sChanNorm = new Mat();
 
-        //showResult(labThreshBinary);
+        Core.normalize(sChan,sChanNorm,0,255,Core.NORM_MINMAX);
+
+        Mat sbChan = new Mat();
+
+        Core.scaleAdd(bChan,(1.0/255),sChanNorm,sbChan);
+
+        Core.normalize(sbChan,sbChan,0,255,Core.NORM_MINMAX);
+
+        showResult(sbChan);
+
+        Imgproc.threshold(sbChan,labThreshBinary,stdm1[1]+stdm1[0],255,Imgproc.THRESH_BINARY);
+        Imgproc.threshold(bChan,labThreshOtsu,0,255,Imgproc.THRESH_OTSU);
 
         /*Otsu threshold will usually do a good job of segmenting the cubes from the rest of the
         image (as they contrast heavily with the background), but does not function well when there
@@ -84,22 +102,16 @@ public class GoldMine1 {
         which accounts for times when the cube is not in the image while keeping the otsu threshold's power*/
         Core.bitwise_and(labThreshBinary,labThreshOtsu,labThresh);
 
-        //showResult(labThreshBinary);
-        //showResult(labThreshOtsu);
+        showResult(labThresh);
 
         //Removes used images from memory to avoid overflow crashes
-        bChan.release();
-        labThreshBinary.release();
+        //bChan.release();
+        //labThreshBinary.release();
         labThreshOtsu.release();
 
         //Converts input from RGB color format to HSV color format, then extracts the h channel
         //HSV stands for hue, saturation, value. We are only interested in the h channel, which stores color information
         //Because of its division of color into a separate channel, HSV format is resistant to lighting changes and so is good for color filtering
-        Imgproc.cvtColor(input,hsv,Imgproc.COLOR_RGB2HSV_FULL);
-        Core.extractChannel(hsv,hChan,0);
-
-        Mat sChan = new Mat();
-        Core.extractChannel(hsv,sChan,1);
 
         Mat temp = new Mat(hChan.size(),hChan.type(),new Scalar(50.59));
 
@@ -108,11 +120,12 @@ public class GoldMine1 {
 
         Core.bitwise_not(temp2,temp2);
 
-        Core.bitwise_and(temp2,sChan,temp2);
+        Mat sChanNorm2 = new Mat();
+        Core.normalize(sChan,sChanNorm2,0,255,Core.NORM_MINMAX);
+
+        Core.bitwise_and(temp2,sChanNorm2,temp2);
 
         Imgproc.medianBlur(temp2,temp2,9);
-
-        //showResult(temp2);
 
         double stdm2[] = calcStdDevMean(temp2);
 
@@ -123,30 +136,15 @@ public class GoldMine1 {
         showResult(temp2);
 
         //Imgproc.adaptiveThreshold(temp2,temp2,255,Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C,Imgproc.THRESH_BINARY,13,0);
-        //showResult(temp2);
         //Imgproc.threshold(temp2,temp2,0.75*minMaxLocResult.maxVal,255,Imgproc.THRESH_OTSU);
 
 
-
-        //showResult(sChan);
-
-        //showResult(labThresh);
-
         //Core.bitwise_and(temp2,labThresh,labThresh);
 
-        //showResult(temp2);
-
-        //showResult(labThresh);
 
         Core.bitwise_and(labThresh,a,labThresh);
 
-        //showResult(labThresh);
-
-        //showResult(temp2);
-
         Imgproc.morphologyEx(labThresh,labThresh,Imgproc.MORPH_CLOSE,Imgproc.getStructuringElement(Imgproc.MORPH_RECT,new Size(5,5)));
-
-        showResult(labThresh);
 
         //Masks image so that the only h regions detected are those that were also detected by the Lab otsu and binary thresholds
         Mat masked = new Mat();
@@ -172,9 +170,6 @@ public class GoldMine1 {
 
         Imgproc.threshold(distanceTransform,thresholded,stdm[1]/stdm[0],255,Imgproc.THRESH_BINARY);
 
-        //showResult(thresholded);
-
-        //showResult(thresholded);
         //Removes used images from memory to avoid overflow crashes
         distanceTransform.release();
 
@@ -205,26 +200,23 @@ public class GoldMine1 {
         //Edges are represented as a binary image, with "on" pixels along the edge and "off" pixels everywhere else
         Mat edges = new Mat();
         double sigma = 0.33;
-        Imgproc.Canny(masked,edges,(int) Math.round(Math.max(0,(1-sigma)*med)),(int) Math.round(Math.min(255,1+sigma)*med));
+        Imgproc.Canny(labThresh,edges,(int) Math.round(Math.max(0,(1-sigma)*med)),(int) Math.round(Math.min(255,1+sigma)*med));
 
         showResult(edges);
 
-        //showResult(masked);
 
         //Enhances edge information
         Imgproc.dilate(edges,edges,Imgproc.getStructuringElement(Imgproc.MORPH_CROSS,new Size(2,2)),new Point(),1);
-
-        //showResult(edges);
 
         //Turns edges into a list of shapes
         List<MatOfPoint> contours = new ArrayList<>();
         Imgproc.findContours(edges,contours,new Mat(),Imgproc.RETR_LIST,Imgproc.CHAIN_APPROX_SIMPLE);
 
-        //showResult(edges);
-
         //Removes used images from memory to avoid overflow crashes
         edges.release();
 
+        MatOfPoint bestContour = new MatOfPoint();
+        double maxMean = 0;
         int detected = 0;
         List<Double> usedx = new ArrayList<>();
         List<Double> usedy = new ArrayList<>();
@@ -233,65 +225,28 @@ public class GoldMine1 {
             //Approximates the shape to smooth out excess edges
             MatOfPoint2f approx = new MatOfPoint2f();
             double peri = Imgproc.arcLength(new MatOfPoint2f(contours.get(i).toArray()), true);
-            Imgproc.approxPolyDP(new MatOfPoint2f(contours.get(i).toArray()), approx, 0.1 * peri, true); //0.1 is a detail factor, higher factor = lower detail, lower factor = higher detail
+            Imgproc.approxPolyDP(new MatOfPoint2f(contours.get(i).toArray()), approx, 0.03 * peri, true); //0.1 is a detail factor, higher factor = lower detail, lower factor = higher detail
             MatOfPoint approxMop = new MatOfPoint(approx.toArray());
 
+            //Calculates a convex hull of the shape, covering up any dents
+            MatOfPoint convex = hull(approxMop);
             //Does a simple size check to eliminate extremely small contours
             if (Imgproc.contourArea(approxMop) > 100) {
 
                 //Checks if one of the distance transform centers is contained within the shape
-                Rect box = calcBox(contours.get(i));
+
                 //Imgproc.putText(input,"1",new Point(box.x, box.y), Imgproc.FONT_HERSHEY_COMPLEX, 1, new Scalar(0, 0, 0), 3);
                 Point center = getCenter(approxMop);
                 if (containsPoint(approx,centers) && !(usedx.contains(center.x) && usedy.contains(center.y))) {
-
                     usedx.add(center.x);
                     usedy.add(center.y);
-                    //Calculates a convex hull of the shape, covering up any dents
-                    MatOfPoint convex = hull(approxMop);
-                    //Calculates a rectangle that lies completely inside the shape
-                    Rect bbox = calcBox(convex);
 
-                    //Size check to see if the box could be calculated
-                    if (bbox.x >= 0 && bbox.y >= 0 && bbox.x + bbox.width <= masked.cols() && bbox.y + bbox.height <= masked.rows()) {
-                        //Selects the region of interest (roi) determined from the calcBox function from the masked h channel image
-                        Mat roi = masked.submat(bbox);
-                        //Calculates the standard deviation and mean of the selected region. In this case it will calculate the average color and the color standard deviation
-                        double[] stdMean = calcStdDevMean(roi);
-
-                        //Does a test for average color and standard deviation (average color between 10 and 40, exclusive, and standard deviation less than 24)
-
-                        System.out.println(stdMean[1]);
-                        System.out.println(stdMean[0]);
-                        System.out.println();
-
-                        if (stdMean[1] > 12 && stdMean[1] < 51 && stdMean[0] < 24) {
-                            //Calculate the overall bounding rectangle around the shape
-                            Rect bboxLarge = Imgproc.boundingRect(convex);
-
-                            List<MatOfPoint> approxList = new ArrayList<>();
-                            approxList.add(convex);
-
-
-                            //Imgproc.drawContours(input, contours, i, new Scalar(255, 0, 0), 9);
-                            //Imgproc.drawContours(input,approxList,-1,new Scalar(0,0,255),9);
-                            //Imgproc.putText(input, Double.toString(Math.floor(100*(1.0 * bboxLarge.width) / (1.0 * bboxLarge.height))/100.0), new Point(bbox.x, bbox.y), Imgproc.FONT_HERSHEY_COMPLEX, 1, new Scalar(255, 0, 0), 3);
-
-                            //Checks the size of the bounding box against what it can be based on a model of a rotating cube. Tolerance is added to account for noise
-                            double tolerance = 0.2; //must be positive
-                            //((1.0 * bboxLarge.width) / (1.0 * bboxLarge.height)) > Math.sqrt(2.0 / 3.0) * (1 - tolerance) && ((1.0 * bboxLarge.width) / (1.0 * bboxLarge.height)) < Math.sqrt(3.0 / 2.0) * (1 + tolerance)
-                            if (true) {
-                                //Checks if shape has 4 or 6 corners, which will be true for any cube-shaped object
-
-                                if (convex.toList().size() == 4 || convex.toList().size() == 5 || convex.toList().size() == 6) {
-                                    //Draws shape to screen
-                                    Imgproc.drawContours(input, approxList, 0, new Scalar(0, 255, 0), 1);
-                                    detected++;
-                                    //Imgproc.putText(input, Integer.toString(detected),new Point(bbox.x, bbox.y), Imgproc.FONT_HERSHEY_COMPLEX, 3, new Scalar(255, 0, 255), 3);
-                                    approxList.clear();
-                                }
-                            }
-                        }
+                    Rect box = Imgproc.boundingRect(convex);
+                    Mat roi = temp2.submat(box);
+                    double[] sm = calcStdDevMean(roi);
+                    if(sm[1] > maxMean) {
+                        bestContour = new MatOfPoint(convex.toArray());
+                        maxMean = sm[1];
                     }
                 }
             }
@@ -301,6 +256,12 @@ public class GoldMine1 {
             approxMop.release();
         }
 
+
+        if(!bestContour.empty()) {
+            List<MatOfPoint> g = new ArrayList<>();
+            g.add(bestContour);
+            Imgproc.drawContours(input, g, -1, new Scalar(0, 255, 0), 1);
+        }
         System.out.println(detected);
         //Removes used images from memory to avoid overflow crashes
         masked.release();
