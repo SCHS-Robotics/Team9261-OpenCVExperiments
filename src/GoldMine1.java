@@ -18,17 +18,30 @@ public class GoldMine1 {
 
         String filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\40108068_320820165353263_2733329782681540191_n.jpg";
         filename = "C:\\Users\\coles\\Desktop\\Data\\20180910_095634.jpg";
-        //filename = "C:\\Users\\coles\\Desktop\\Data\\20180910_094912.jpg";
+        filename = "C:\\Users\\coles\\Desktop\\Data\\20180910_094912.jpg";
         //filename = "C:\\Users\\coles\\Desktop\\Data\\b.jpg";
-        //filename = "C:\\Users\\coles\\Desktop\\Data\\failure\\IMG-1735.jpg";
+        filename = "C:\\Users\\coles\\Desktop\\Data\\failure\\IMG-1738.jpg";
         Mat input = Imgcodecs.imread(filename); //Reads in image from file, only used for testing purposes
-        Imgproc.resize(input,input,new Size(input.size().width/4,input.size().height/4)); //Reduces image size for speed
+        Imgproc.resize(input, input, new Size(320, (int) Math.round((320/input.size().width)*input.size().height))); //Reduces image size for speed
 
         Retina retina = Retina.create(input.size());
         retina.setup("C:\\Users\\coles\\Desktop\\Data\\RetinaParams2.xml");
         retina.clearBuffers();
 
         retina.applyFastToneMapping(input,input);
+
+        Mat yuv = new Mat();
+        Imgproc.cvtColor(input,yuv,Imgproc.COLOR_RGB2YUV);
+        Mat uChan = new Mat();
+        Core.extractChannel(yuv,uChan,1);
+        Mat b = new Mat();
+        Imgproc.medianBlur(uChan,uChan,9);
+        //Imgproc.filter2D(uChan,uChan,-1,Imgproc.getStructuringElement(Imgproc.MORPH_RECT,new Size(1,1)));
+        //showResult(b);
+        //showResult(uChan);
+        Mat a = new Mat();
+        Imgproc.threshold(uChan,a,145,255,Imgproc.THRESH_BINARY);
+        showResult(a);
 
         Imgproc.cvtColor(input,input,Imgproc.COLOR_BGR2RGBA); //Converts input image from BGR to RGBA, only used for testing purposes
 
@@ -58,10 +71,10 @@ public class GoldMine1 {
 
         double stdm1[] = calcStdDevMean(bChan);
 
-        Imgproc.threshold(bChan,labThreshBinary,160,255,Imgproc.THRESH_BINARY);
+        Imgproc.threshold(bChan,labThreshBinary,stdm1[1],255,Imgproc.THRESH_BINARY);
         Imgproc.threshold(bChan,labThreshOtsu,0,255,Imgproc.THRESH_OTSU);
 
-        showResult(labThreshBinary);
+        //showResult(labThreshBinary);
 
         /*Otsu threshold will usually do a good job of segmenting the cubes from the rest of the
         image (as they contrast heavily with the background), but does not function well when there
@@ -71,7 +84,8 @@ public class GoldMine1 {
         which accounts for times when the cube is not in the image while keeping the otsu threshold's power*/
         Core.bitwise_and(labThreshBinary,labThreshOtsu,labThresh);
 
-        showResult(labThreshOtsu);
+        //showResult(labThreshBinary);
+        //showResult(labThreshOtsu);
 
         //Removes used images from memory to avoid overflow crashes
         bChan.release();
@@ -87,26 +101,54 @@ public class GoldMine1 {
         Mat sChan = new Mat();
         Core.extractChannel(hsv,sChan,1);
 
-        Mat temp = new Mat(hChan.size(),hChan.type(),new Scalar(34));
+        Mat temp = new Mat(hChan.size(),hChan.type(),new Scalar(50.59));
 
         Mat temp2 = new Mat();
-        Mat vChan = new Mat();
-        Core.extractChannel(hsv,vChan,2);
         Core.absdiff(hChan,temp,temp2);
 
         Core.bitwise_not(temp2,temp2);
 
         Core.bitwise_and(temp2,sChan,temp2);
 
+        Imgproc.medianBlur(temp2,temp2,9);
+
+        showResult(temp2);
+
         double stdm2[] = calcStdDevMean(temp2);
-        Imgproc.threshold(temp2,temp2,stdm2[1]+1.5*stdm2[0],255,Imgproc.THRESH_BINARY);
+
+        Core.MinMaxLocResult minMaxLocResult = Core.minMaxLoc(temp2);
+
+        System.out.println(getMedian(temp2));
+        System.out.println(stdm2[1]);
+        System.out.println(stdm2[0]);
+
+        double mul = (minMaxLocResult.maxVal-stdm2[1])/stdm2[0];
+
+        System.out.println();
+
+        Imgproc.threshold(temp2,temp2,0.75*minMaxLocResult.maxVal,255,Imgproc.THRESH_BINARY);
+
+        //showResult(temp2);
 
         //showResult(sChan);
-        showResult(temp2);
+
+        //showResult(labThresh);
 
         Core.bitwise_and(temp2,labThresh,labThresh);
 
+        //showResult(temp2);
+
+        //showResult(labThresh);
+
+        Core.bitwise_and(labThresh,a,labThresh);
+
+        //showResult(labThresh);
+
+        //showResult(temp2);
+
         Imgproc.morphologyEx(labThresh,labThresh,Imgproc.MORPH_CLOSE,Imgproc.getStructuringElement(Imgproc.MORPH_RECT,new Size(5,5)));
+
+        showResult(labThresh);
 
         //Masks image so that the only h regions detected are those that were also detected by the Lab otsu and binary thresholds
         Mat masked = new Mat();
@@ -156,17 +198,18 @@ public class GoldMine1 {
         //labThresh.release();
 
         //Imgproc.bilateralFilter(masked,dst,5,5,5);
-        Imgproc.GaussianBlur(labThresh,labThresh,new Size(5,5),0);
+        //Imgproc.GaussianBlur(labThresh,labThresh,new Size(5,5),0);
 
         //Calculates the median value of the image
-        double med = getMedian(labThresh);
+        double med = getMedianNonZero(masked);
 
         //Dynamically calculates the best parameters for the Canny edge detector to find the edges of all of the detected shapes
         //Edges are represented as a binary image, with "on" pixels along the edge and "off" pixels everywhere else
         Mat edges = new Mat();
         double sigma = 0.33;
-        Imgproc.Canny(labThresh,edges,(int) Math.round(Math.max(0,(1-sigma)*med)),(int) Math.round(Math.min(255,1+sigma)*med));
+        Imgproc.Canny(masked,edges,(int) Math.round(Math.max(0,(1-sigma)*med)),(int) Math.round(Math.min(255,1+sigma)*med));
 
+        showResult(edges);
 
         //showResult(masked);
 
@@ -179,7 +222,7 @@ public class GoldMine1 {
         List<MatOfPoint> contours = new ArrayList<>();
         Imgproc.findContours(edges,contours,new Mat(),Imgproc.RETR_LIST,Imgproc.CHAIN_APPROX_SIMPLE);
 
-        showResult(edges);
+        //showResult(edges);
 
         //Removes used images from memory to avoid overflow crashes
         edges.release();
@@ -196,10 +239,14 @@ public class GoldMine1 {
             MatOfPoint approxMop = new MatOfPoint(approx.toArray());
 
             //Does a simple size check to eliminate extremely small contours
-            if (Imgproc.contourArea(approxMop) > 1000) {
+            if (Imgproc.contourArea(approxMop) > 100) {
+
                 //Checks if one of the distance transform centers is contained within the shape
+                Rect box = calcBox(contours.get(i));
+                Imgproc.putText(input,"1",new Point(box.x, box.y), Imgproc.FONT_HERSHEY_COMPLEX, 1, new Scalar(0, 0, 0), 3);
                 Point center = getCenter(approxMop);
                 if (containsPoint(approx,centers) && !(usedx.contains(center.x) && usedy.contains(center.y))) {
+
                     usedx.add(center.x);
                     usedy.add(center.y);
                     //Calculates a convex hull of the shape, covering up any dents
@@ -215,10 +262,12 @@ public class GoldMine1 {
                         double[] stdMean = calcStdDevMean(roi);
 
                         //Does a test for average color and standard deviation (average color between 10 and 40, exclusive, and standard deviation less than 24)
+
                         System.out.println(stdMean[1]);
                         System.out.println(stdMean[0]);
+                        System.out.println();
 
-                        if (stdMean[1] > 17 && stdMean[1] < 51 && stdMean[0] < 24) {
+                        if (stdMean[1] > 12 && stdMean[1] < 51 && stdMean[0] < 24) {
                             //Calculate the overall bounding rectangle around the shape
                             Rect bboxLarge = Imgproc.boundingRect(convex);
 
@@ -232,9 +281,10 @@ public class GoldMine1 {
 
                             //Checks the size of the bounding box against what it can be based on a model of a rotating cube. Tolerance is added to account for noise
                             double tolerance = 0.2; //must be positive
-                            if (((1.0 * bboxLarge.width) / (1.0 * bboxLarge.height)) > Math.sqrt(2.0 / 3.0) * (1 - tolerance) && ((1.0 * bboxLarge.width) / (1.0 * bboxLarge.height)) < Math.sqrt(3.0 / 2.0) * (1 + tolerance)) {
+                            //((1.0 * bboxLarge.width) / (1.0 * bboxLarge.height)) > Math.sqrt(2.0 / 3.0) * (1 - tolerance) && ((1.0 * bboxLarge.width) / (1.0 * bboxLarge.height)) < Math.sqrt(3.0 / 2.0) * (1 + tolerance)
+                            if (true) {
                                 //Checks if shape has 4 or 6 corners, which will be true for any cube-shaped object
-                                System.out.println(approx.toList().size());
+
                                 if (convex.toList().size() == 4 || convex.toList().size() == 5 || convex.toList().size() == 6) {
                                     //Draws shape to screen
                                     Imgproc.drawContours(input, approxList, 0, new Scalar(0, 255, 0), 9);
@@ -366,6 +416,32 @@ public class GoldMine1 {
 
         //Calculates median of the image. Median is the middle value of the row of sorted pixels. If there are two middle pixels, the median is their average.
         double median = sorted.size().width % 2 == 1 ? sorted.get(0,(int) Math.floor(sorted.size().width/2))[0] : (sorted.get(0,(int) (sorted.size().width/2)-1)[0]+sorted.get(0,(int) sorted.size().width/2)[0])/2;
+
+        //Removes used images from memory to avoid overflow crashes
+        rowMat.release();
+        sorted.release();
+
+        return median;
+    }
+    private static double getMedianNonZero(Mat input) {
+        //Turns image into a single row of pixels
+        Mat rowMat = input.reshape(0,1);
+
+        //Sort pixel values from least to greatest
+        Mat sorted = new Mat();
+        Core.sort(rowMat,sorted,Core.SORT_ASCENDING);
+
+        System.out.println(sorted.size());
+
+        double sum = 0;
+        int idx = 0;
+        while(sum == 0) {
+            sum+=sorted.get(0,idx)[0];
+            idx+=sorted.get(0,idx)[0] > 0 ? 1 : 0;
+        }
+
+        //Calculates median of the image. Median is the middle value of the row of sorted pixels. If there are two middle pixels, the median is their average.
+        double median = (sorted.size().width-idx) % 2 == 1 ? sorted.get(0,(int) Math.floor(idx+((sorted.size().width-idx)/2)))[0] : (sorted.get(0,(int) (idx+(sorted.size().width-idx)/2)-1)[0]+sorted.get(0,(int) (idx+(sorted.size().width-idx)/2))[0])/2;
 
         //Removes used images from memory to avoid overflow crashes
         rowMat.release();
