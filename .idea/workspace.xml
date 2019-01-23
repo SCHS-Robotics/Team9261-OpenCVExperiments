@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3087684-9b78-498b-aaf8-eb342ea29b5d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/HSVProcess.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HSV_LabProcess.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/LabProcess.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/YUVProcess.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/NonMaxSuppressor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GoldMine2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GoldMine2.java" afterDir="false" />
     </list>
@@ -21,55 +18,21 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GoldMine2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2125">
-              <caret line="158" lean-forward="true" selection-start-line="158" selection-end-line="158" />
+            <state relative-caret-position="272">
+              <caret line="164" column="8" selection-start-line="164" selection-start-column="8" selection-end-line="164" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/YUVProcess.java">
+        <entry file="file://$PROJECT_DIR$/src/NonMaxSuppressor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="421">
-              <caret line="34" column="24" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
+            <state relative-caret-position="34">
+              <caret line="62" column="5" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/LabProcess.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="57" column="24" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HSVProcess.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="31" column="76" selection-start-line="31" selection-start-column="76" selection-end-line="31" selection-end-column="76" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HSV_LabProcess.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="28" column="61" selection-start-line="28" selection-start-column="61" selection-end-line="28" selection-end-column="61" />
-              <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#286#287#0" expanded="true" />
+                <element signature="e#322#323#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -133,13 +96,14 @@
         <option value="$PROJECT_DIR$/src/YUVProcess.java" />
         <option value="$PROJECT_DIR$/src/HSVProcess.java" />
         <option value="$PROJECT_DIR$/src/HSV_LabProcess.java" />
+        <option value="$PROJECT_DIR$/src/NonMaxSuppressor.java" />
         <option value="$PROJECT_DIR$/src/GoldMine2.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="208" />
-    <option name="y" value="124" />
+    <option name="x" value="360" />
+    <option name="y" value="168" />
     <option name="width" value="1402" />
     <option name="height" value="901" />
   </component>
@@ -199,7 +163,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548210626030" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548231200747" />
     <property name="last_opened_file_path" value="$USER_HOME$/opencv_java401.dll" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -244,15 +208,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="JPanelOpenCV" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="JPanelOpenCV" />
+    <configuration name="LocalMaximaTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="LocalMaximaTest" />
       <module name="9261-LevelUp-OpenCVExperiments" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LocalMaximaTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="LocalMaximaTest" />
+    <configuration name="NonMaxSuppressor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="NonMaxSuppressor" />
       <module name="9261-LevelUp-OpenCVExperiments" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -267,18 +231,18 @@
     </configuration>
     <list>
       <item itemvalue="Application.GoldMine1" />
-      <item itemvalue="Application.JPanelOpenCV" />
       <item itemvalue="Application.VideoTest" />
       <item itemvalue="Application.LocalMaximaTest" />
       <item itemvalue="Application.GoldMine2" />
+      <item itemvalue="Application.NonMaxSuppressor" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.GoldMine2" />
+        <item itemvalue="Application.NonMaxSuppressor" />
         <item itemvalue="Application.GoldMine1" />
         <item itemvalue="Application.LocalMaximaTest" />
         <item itemvalue="Application.VideoTest" />
-        <item itemvalue="Application.JPanelOpenCV" />
       </list>
     </recent_temporary>
   </component>
@@ -405,14 +369,21 @@
       <option name="project" value="LOCAL" />
       <updated>1548106336484</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Parallelized GoldMine2 program and fixed its contour filtering :)">
+      <created>1548211113764</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1548211113764</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="208" y="124" width="1402" height="901" extended-state="0" />
+    <frame x="-44" y="106" width="1402" height="901" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26080477" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26080477" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -423,7 +394,7 @@
       <window_info anchor="bottom" id="JProfiler" sideWeight="0.49925485" weight="0.32885906" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49946696" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4962742" visible="true" weight="0.18791947" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4962742" visible="true" weight="0.18791947" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49850968" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -431,7 +402,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.3298351" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50372577" side_tool="true" weight="0.18791947" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Messages" order="10" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32885906" />
       <window_info anchor="bottom" id="Run with VisualVM" order="11" sideWeight="0.49850968" weight="0.32885906" />
       <window_info anchor="bottom" id="Debug with VisualVM" order="12" sideWeight="0.49925485" weight="0.32885906" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -500,11 +471,10 @@
     <MESSAGE value="this was an oof, trying to fix" />
     <MESSAGE value="Fixed masks and added a new mask. Block filtering is probably still broken though" />
     <MESSAGE value="Fixed more block detection things" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed more block detection things" />
+    <MESSAGE value="Parallelized GoldMine2 program and fixed its contour filtering :)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Parallelized GoldMine2 program and fixed its contour filtering :)" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/OneDrive/Desktop/buildspace/contribbuild/install/java/opencv-401.jar!/org/opencv/xfeatures2d/BriefDescriptorExtractor.java" />
-    <entry file="jar://$USER_HOME$/OneDrive/Desktop/buildspace/contribbuild/install/java/opencv-401.jar!/org/opencv/xfeatures2d/HarrisLaplaceFeatureDetector.java" />
     <entry file="jar://$USER_HOME$/OneDrive/Desktop/buildspace/contribbuild/install/java/opencv-401.jar!/org/opencv/xfeatures2d/PCTSignatures.java" />
     <entry file="jar://$USER_HOME$/OneDrive/Desktop/buildspace/contribbuild/install/java/opencv-401.jar!/org/opencv/xfeatures2d/StarDetector.java" />
     <entry file="jar://$USER_HOME$/OneDrive/Desktop/buildspace/contribbuild/install/java/opencv-401.jar!/org/opencv/xfeatures2d/SIFT.java" />
@@ -796,16 +766,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HSV_LabProcess.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="28" column="61" selection-start-line="28" selection-start-column="61" selection-end-line="28" selection-end-column="61" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/HSVProcess.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -826,10 +786,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/util/function/Predicate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="48" column="12" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HSV_LabProcess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="28" column="61" selection-start-line="28" selection-start-column="61" selection-end-line="28" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NonMaxSuppressor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="62" column="5" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#286#287#0" expanded="true" />
+            <element signature="e#322#323#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/GoldMine2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2125">
-          <caret line="158" lean-forward="true" selection-start-line="158" selection-end-line="158" />
+        <state relative-caret-position="272">
+          <caret line="164" column="8" selection-start-line="164" selection-start-column="8" selection-end-line="164" selection-end-column="8" />
         </state>
       </provider>
     </entry>

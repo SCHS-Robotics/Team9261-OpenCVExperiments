@@ -17,8 +17,6 @@ import java.util.concurrent.Executors;
 public class GoldMine2 {
     static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
 
-    private final ExecutorService service = Executors.newFixedThreadPool(4);
-
     public static void main (String args[]) {
 
         String filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\40108068_320820165353263_2733329782681540191_n.jpg";
@@ -114,6 +112,9 @@ public class GoldMine2 {
         int detected = 0;
         List<Double> usedx = new ArrayList<>();
         List<Double> usedy = new ArrayList<>();
+
+        List<Rect> bboxes = new ArrayList<>();
+
         //Loops through the list of shapes (contours) and finds the ones most likely to be a cube
         for (int i = 0; i < contours.size(); i++) {
             //Approximates the shape to smooth out excess edges
@@ -146,6 +147,7 @@ public class GoldMine2 {
                             System.out.println((1.0*bbox.width)/(1.0*bbox.height));
                             if((1.0*bbox.width)/(1.0*bbox.height) >= Math.sqrt(2)/2.0 && (1.0*bbox.width)/(1.0*bbox.height) <= Math.sqrt(2)) {
                                 Imgproc.drawContours(input, contours, i, new Scalar(0,255, 0), 1);
+                                bboxes.add(bbox);
                             }
                         }
                     }
@@ -156,6 +158,11 @@ public class GoldMine2 {
             approx.release();
             approxMop.release();
         }
+
+        NonMaxSuppressor nonMaxSuppressor = new NonMaxSuppressor(0.3);
+        List<Rect> goodBoxes = nonMaxSuppressor.suppressNonMax(bboxes);
+
+        System.out.println(goodBoxes.size());
 
         System.out.println(detected);
 
