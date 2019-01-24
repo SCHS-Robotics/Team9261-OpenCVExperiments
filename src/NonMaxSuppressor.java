@@ -10,7 +10,8 @@ public class NonMaxSuppressor {
     private static double thresh;
 
     public NonMaxSuppressor(double thresh) {
-        thresh = thresh;
+
+        this.thresh = thresh;
     }
 
     public static List<Rect> suppressNonMax(List<Rect> boxes) {
@@ -28,10 +29,11 @@ public class NonMaxSuppressor {
         List<Double> areas = new ArrayList<>();
 
         for(Rect box : boxes) {
+
             x1.add((double) box.x);
             y1.add((double) box.y);
-            x2.add((double) box.width);
-            y2.add((double) box.height);
+            x2.add((double) box.x+box.width);
+            y2.add((double) box.y+box.height);
 
             areas.add((x2.get(boxes.indexOf(box))-x1.get(boxes.indexOf(box))+1)*(y2.get(boxes.indexOf(box))-y1.get(boxes.indexOf(box))+1));
         }
@@ -39,6 +41,8 @@ public class NonMaxSuppressor {
         List<Integer> idxes = argsort(y2);
 
         while(idxes.size() > 0) {
+
+            System.out.println(idxes);
 
             int last = idxes.size() - 1;
             int i = idxes.get(last);
@@ -50,13 +54,18 @@ public class NonMaxSuppressor {
             List<Double> xx2 = listMin(x2.get(i),x2,idxes.subList(0,last));
             List<Double> yy2 = listMin(y2.get(i),y2,idxes.subList(0,last));
 
+
             List<Double> w = listMax(0,addListConstant(subtractLists(xx2,xx1),1));
             List<Double> h = listMax(0,addListConstant(subtractLists(yy2,yy1),1));
 
             List<Double> overlap = divideLists(multiplyLists(w,h),areas,idxes.subList(0,last));
 
+
+            //non_max_suppression_fast(boxes,0.3)
+
             idxes.remove(last);
             deleteBadIndexes(idxes,overlap);
+
         }
 
         return populateList(boxes,selectedIdxes);
@@ -86,10 +95,9 @@ public class NonMaxSuppressor {
         return output;
     }
     private static List<Double> divideLists(List<Double> lst1, List<Double> lst2, List<Integer> mask) {
-        assert lst1.size() == lst2.size(): "lists not the same size";
         List<Double> output = new ArrayList<>();
         for (int i = 0; i < mask.size(); i++) {
-            output.add(lst1.get(mask.get(i))/lst2.get(mask.get(i)));
+            output.add(lst1.get(i)/lst2.get(mask.get(i)));
         }
         return output;
     }
@@ -102,15 +110,12 @@ public class NonMaxSuppressor {
         return output;
     }
 
-    private static List<Integer> deleteBadIndexes(List<Integer> idxes, List<Double> overlaps) {
-        List<Integer> badIndicies = new ArrayList<>();
+    private static void deleteBadIndexes(List<Integer> idxes, List<Double> overlaps) {
         for(int i = 0; i < overlaps.size(); i++) {
-            if(overlaps.get(i) > thresh && !badIndicies.contains(i)) {
-                badIndicies.add(i);
+            if(overlaps.get(i) > thresh) {
+                idxes.remove(i);
             }
         }
-        idxes.removeAll(badIndicies);
-        return idxes;
     }
 
     private static List<Double> listMax(double x, List<Double> lst, List<Integer> mask) {
@@ -134,38 +139,21 @@ public class NonMaxSuppressor {
         }
         return output;
     }
-    private static List<Double> listDivide(double cnst, List<Double> lst, List<Integer> mask) {
-        List<Double> output = new ArrayList<>();
-        for(int idx : mask) {
-            output.add(cnst/lst.get(idx));
-        }
-        return output;
-    }
+
     private static List<Integer> argsort(List<Double> input) {
         List<Integer> output = new ArrayList<>();
+        List<Double> cpy = new ArrayList<>();
+        List<Double> lstSorted = new ArrayList<>();
 
-        List<Double> lst1 = new ArrayList<>();
-        List<Double> lst2 = new ArrayList<>();
+        lstSorted.addAll(input);
+        cpy.addAll(input);
+        Collections.sort(lstSorted);
 
-        lst1.addAll(input);
-        lst2.addAll(input);
-
-        Collections.sort(lst1);
-
-        int multiples = 0;
-        for (Double num : lst1) {
-            if(!output.contains(lst2.indexOf(num))) {
-                output.add(lst2.indexOf(num));
-                multiples = 0;
-            }
-            else {
-                multiples++;
-                output.add(lst2.indexOf(num) + multiples);
-            }
-            lst2.remove(num);
-
+        for (double val : lstSorted) {
+            output.add(cpy.indexOf(val));
+            cpy.set(cpy.indexOf(val),-1.0);
         }
-
         return output;
     }
+
 }

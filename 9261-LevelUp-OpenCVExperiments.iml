@@ -11,14 +11,14 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/CustomCV/opencv-401.jar!/" />
+          <root url="jar://$USER_HOME$/opencv-401.jar!/" />
         </CLASSES>
         <JAVADOC />
         <NATIVE>
-          <root url="file://$USER_HOME$/Desktop/CustomCV" />
+          <root url="file://C:/" />
         </NATIVE>
         <SOURCES>
-          <root url="jar://$USER_HOME$/Desktop/CustomCV/opencv-401.jar!/" />
+          <root url="jar://$USER_HOME$/opencv-401.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
