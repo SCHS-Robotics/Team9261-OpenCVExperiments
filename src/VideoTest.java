@@ -12,11 +12,13 @@ import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VideoTest {
     static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
     public static void main(String args[]) {
-        VideoCapture cap = new VideoCapture("C:\\Users\\Cole Savage\\Desktop\\20180910_095748.mp4");
+        VideoCapture cap = new VideoCapture("C:\\Users\\Cole Savage\\Desktop\\Data\\20180910_095748.mp4");
         Mat mat = new Mat();
 
         // Grab the first frame to get the dimensions
@@ -38,15 +40,25 @@ public class VideoTest {
         frame.getContentPane().add(label);
 
         // Resize it to fit the video
-        frame.pack();
+        //frame.pack();
         frame.setVisible(true);
 
-        KalmanTracker kalmanTracker = new KalmanTracker(new Point(0,0));
+       // KalmanTracker kalmanTracker = new KalmanTracker(new Point(0,0));
+
+        List<KalmanTracker> kalmanTrackers = new ArrayList<>();
 
         long startTime = System.currentTimeMillis();
         for (;;) {
-            Point p = GoldMineVideoProcess.main(mat);
+            Imgproc.resize(mat, mat, new Size(320, (int) Math.round((320/mat.size().width)*mat.size().height)));
+            List<Rect> rects = GoldMineVideoProcess.main(mat);
 
+            for(Rect r : rects) {
+                Point center = new Point(r.x+r.width/2.0,r.y+r.height/2.0);
+                if(!pointInAnyBoxes(rects,center)) {
+
+                }
+            }
+/*
             if((p.x != 0 || p.y != 0)) {
                 kalmanTracker.update(p,true);
 
@@ -54,14 +66,9 @@ public class VideoTest {
 
             Point prediction = kalmanTracker.getPrediction();
 
-            System.out.println(p.x);
-            System.out.println(prediction.x);
-            System.out.println(System.currentTimeMillis()-startTime);
-            System.out.println();
-
             Imgproc.circle(mat,prediction,5,new Scalar(0,0,255),-1);
-
-            Imgproc.resize(mat,mat,new Size(w,h));
+*/
+            showResult(mat);
 
             // Copy pixels from the Mat to the image
             mat.get(0, 0, data);
@@ -111,5 +118,17 @@ public class VideoTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static boolean pointInAnyBoxes(List<Rect> rects, Point p) {
+        boolean inAnyBox = false;
+        for(Rect r : rects) {
+            inAnyBox = pointInBox(r,p);
+        }
+        return inAnyBox;
+    }
+
+    private static boolean pointInBox(Rect r, Point p) {
+        return p.x >= r.x && p.y >= r.y && p.x <= r.x+r.width && p.y <=r.y+r.height;
     }
 }

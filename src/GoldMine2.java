@@ -20,7 +20,7 @@ public class GoldMine2 {
     public static void main (String args[]) {
 
         String filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\40108068_320820165353263_2733329782681540191_n.jpg";
-        filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\20180910_095634.jpg";
+        filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\20180908_134210.jpg";
         //filename = "C:\\Users\\coles\\Desktop\\Data\\unnamed1.jpg";
         //filename = "C:\\Users\\coles\\Desktop\\Data\\20180910_094912.jpg";
         //filename = "C:\\Users\\coles\\Desktop\\Data\\b.jpg";
@@ -141,7 +141,6 @@ public class GoldMine2 {
                         if(convex.toList().size() == 4 || convex.toList().size() == 5 || convex.toList().size() == 6) {
                             //Imgproc.drawContours(input, contours, i, new Scalar(0,0, 255), 1);
                             Rect bbox = Imgproc.boundingRect(convex);
-                            System.out.println((1.0*bbox.width)/(1.0*bbox.height));
                             if((1.0*bbox.width)/(1.0*bbox.height) >= Math.sqrt(2)/2.0 && (1.0*bbox.width)/(1.0*bbox.height) <= Math.sqrt(2)) {
                                 //Imgproc.drawContours(input, contours, i, new Scalar(0,255, 0), 1);
                                 bboxes.add(bbox);

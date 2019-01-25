@@ -1,3 +1,4 @@
+import org.opencv.bioinspired.Retina;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
@@ -13,76 +14,28 @@ import java.util.List;
 
 public class GoldMineVideoProcess {
     static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
-    public static Point main (Mat input) {
 
-        String filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\40108068_320820165353263_2733329782681540191_n.jpg";
-        filename = "C:\\Users\\Cole Savage\\Desktop\\20180910_095634.jpg";
-        filename = "C:\\Users\\Cole Savage\\Desktop\\20180910_094912.jpg";
-        //filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\b.jpg";
-        filename = "C:\\Users\\Cole Savage\\Desktop\\IMG-1744.jpg";
-        //Mat input = Imgcodecs.imread(filename); //Reads in image from file, only used for testing purposes
-        Imgproc.resize(input,input,new Size(input.size().width/4,input.size().height/4)); //Reduces image size for speed
-        //Imgproc.cvtColor(input,input,Imgproc.COLOR_BGR2RGBA); //Converts input image from BGR to RGBA, only used for testing purposes
+    public static List<Rect> main (Mat input) {
 
-        //Defines all Mats that will be used in the program
-        Mat lab = new Mat();
-        Mat labThreshBinary = new Mat();
-        Mat labThreshOtsu = new Mat();
+
+        //retina.applyFastToneMapping(input,input);
+
+        Imgproc.cvtColor(input,input,Imgproc.COLOR_BGR2RGBA); //Converts input image from BGR to RGBA, only used for testing purposes
+
+        Mat yuvThresh = new Mat();
         Mat labThresh = new Mat();
-        Mat hsv = new Mat();
-        Mat hChan = new Mat();
-        Mat bChan = new Mat();
+        Mat intensityMap = new Mat();
 
-        //Converts input from RGB color format to Lab color format, then extracts the b channel
-        //Lab is based on the opponent color model, and the b channel represents the blue-yellow axis, so it will be useful in finding yellow colors
-        Imgproc.cvtColor(input,lab,Imgproc.COLOR_BGR2Lab);
-        Core.extractChannel(lab,bChan,2);
+        YUVProcess yuvProcess = new YUVProcess(input,yuvThresh);
+        HSV_LabProcess hsv_labProcess = new HSV_LabProcess(input,intensityMap,labThresh);
+        yuvProcess.run();
+        hsv_labProcess.run();
 
-        //Removes used images from memory to avoid overflow crashes
-        lab.release();
+        while(yuvProcess.running || hsv_labProcess.running);
 
-        /*Thresholds the b channel in two different ways to get a binary filter (correct or not correct)
-        for all detected yellow pixels
-        The binary threshold selects all pixels with a b value above 145
-        The Otsu threshold does the same thing as the binary threshold, but tries to dynamically
-        select the threshold value (the value above which a pixel is considered yellow) to divide the
-        image by contrast. The binary threshold is very inclusive, for reasons that will become clear later*/
+        Core.bitwise_and(labThresh,yuvThresh,labThresh);
 
-        double stdm1[] = calcStdDevMean(bChan);
-
-        Imgproc.threshold(bChan,labThreshBinary,stdm1[1]+stdm1[0],255,Imgproc.THRESH_BINARY);
-        Imgproc.threshold(bChan,labThreshOtsu,0,255,Imgproc.THRESH_OTSU);
-
-        /*Otsu threshold will usually do a good job of segmenting the cubes from the rest of the
-        image (as they contrast heavily with the background), but does not function well when there
-        are no cubes in the image, as the optimal contrast threshold will not necessarily be filtering
-        for yellow. The binary threshold, however, is not affected by the absence of the cubes, and so
-        by performing a bitwise and of the images, we keep only the area where both thresholds agree,
-        which accounts for times when the cube is not in the image while keeping the otsu threshold's power*/
-        Core.bitwise_and(labThreshBinary,labThreshOtsu,labThresh);
-
-        //showResult(labThresh);
-
-        //showResult(labThreshOtsu);
-
-        //Removes used images from memory to avoid overflow crashes
-        bChan.release();
-        labThreshBinary.release();
-        labThreshOtsu.release();
-
-        //Converts input from RGB color format to HSV color format, then extracts the h channel
-        //HSV stands for hue, saturation, value. We are only interested in the h channel, which stores color information
-        //Because of its division of color into a separate channel, HSV format is resistant to lighting changes and so is good for color filtering
-        Imgproc.cvtColor(input,hsv,Imgproc.COLOR_BGR2HSV_FULL);
-        Core.extractChannel(hsv,hChan,0);
-
-        //Masks image so that the only h regions detected are those that were also detected by the Lab otsu and binary thresholds
-        Mat masked = new Mat();
-        Core.bitwise_and(hChan,labThresh,masked);
-
-        //Removes used images from memory to avoid overflow crashes
-        hsv.release();
-        hChan.release();
+        Imgproc.morphologyEx(labThresh,labThresh,Imgproc.MORPH_CLOSE,Imgproc.getStructuringElement(Imgproc.MORPH_RECT,new Size(5,5)));
 
         /*Computes the distance transform of the Lab image threshold and then does a binary threshold of that
         The distance transform sorts pixels by their distance from the nearest black pixel. Larger distance means a higher value
@@ -98,14 +51,8 @@ public class GoldMineVideoProcess {
 
         double stdm[] = calcStdDevMean(distanceTransform,msk);
 
-        //System.out.println(stdm[1]);
-        //System.out.println(stdm[0]);
-
         Imgproc.threshold(distanceTransform,thresholded,stdm[1]/stdm[0],255,Imgproc.THRESH_BINARY);
 
-        //showResult(thresholded);
-
-        //showResult(thresholded);
         //Removes used images from memory to avoid overflow crashes
         distanceTransform.release();
 
@@ -118,33 +65,21 @@ public class GoldMineVideoProcess {
         thresholded.release();
         List<Point> centers = new ArrayList<>();
         for(MatOfPoint shape : centerShapes) {
-            Moments moments = Imgproc.moments(shape);
-            centers.add(new Point(moments.m10/moments.m00,moments.m01/moments.m00));
+            centers.add(getCenter(shape));
             shape.release();
         }
 
         //Removes used images from memory to avoid overflow crashes
-        labThresh.release();
-
-        //Imgproc.bilateralFilter(masked,dst,5,5,5);
-        Imgproc.GaussianBlur(masked,masked,new Size(5,5),0);
-
-        //Calculates the median value of the image
-        double med = getMedian(masked);
+        //labThresh.release();
 
         //Dynamically calculates the best parameters for the Canny edge detector to find the edges of all of the detected shapes
         //Edges are represented as a binary image, with "on" pixels along the edge and "off" pixels everywhere else
         Mat edges = new Mat();
-        double sigma = 0.33;
-        Imgproc.Canny(masked,edges,(int) Math.round(Math.max(0,(1-sigma)*med)),(int) Math.round(Math.min(255,1+sigma)*med));
+        Imgproc.Canny(labThresh,edges,0,255);
 
-
-        //showResult(masked);
 
         //Enhances edge information
-        Imgproc.dilate(edges,edges,Imgproc.getStructuringElement(Imgproc.MORPH_CROSS,new Size(2,2)),new Point(),2);
-
-        //showResult(edges);
+        Imgproc.dilate(edges,edges,Imgproc.getStructuringElement(Imgproc.MORPH_CROSS,new Size(2,2)),new Point(),1);
 
         //Turns edges into a list of shapes
         List<MatOfPoint> contours = new ArrayList<>();
@@ -153,52 +88,46 @@ public class GoldMineVideoProcess {
         //Removes used images from memory to avoid overflow crashes
         edges.release();
 
-        double maxSize = 0;
-        Point maxCenter = new Point();
+        Core.MinMaxLocResult minMaxLocResult = Core.minMaxLoc(intensityMap);
+        double max = minMaxLocResult.maxVal;
+
+        List<Double> usedx = new ArrayList<>();
+        List<Double> usedy = new ArrayList<>();
+
+        List<Rect> bboxes = new ArrayList<>();
+
         //Loops through the list of shapes (contours) and finds the ones most likely to be a cube
         for (int i = 0; i < contours.size(); i++) {
             //Approximates the shape to smooth out excess edges
             MatOfPoint2f approx = new MatOfPoint2f();
             double peri = Imgproc.arcLength(new MatOfPoint2f(contours.get(i).toArray()), true);
-            Imgproc.approxPolyDP(new MatOfPoint2f(contours.get(i).toArray()), approx, 0.1 * peri, true); //0.1 is a detail factor, higher factor = lower detail, lower factor = higher detail
+            Imgproc.approxPolyDP(new MatOfPoint2f(contours.get(i).toArray()), approx, 0.05 * peri, true); //0.1 is a detail factor, higher factor = lower detail, lower factor = higher detail
             MatOfPoint approxMop = new MatOfPoint(approx.toArray());
 
+            //Calculates a convex hull of the shape, covering up any dents
+            MatOfPoint convex = hull(approxMop);
             //Does a simple size check to eliminate extremely small contours
-            if (Imgproc.contourArea(approxMop) > 1000) {
+            if (Imgproc.contourArea(approxMop) > 100) {
+
                 //Checks if one of the distance transform centers is contained within the shape
-                if (containsPoint(approx,centers)) {
-                    //Calculates a convex hull of the shape, covering up any dents
-                    MatOfPoint convex = hull(approxMop);
-                    //Calculates a rectangle that lies completely inside the shape
-                    Rect bbox = calcBox(convex);
 
-                    //Size check to see if the box could be calculated
-                    if (bbox.x >= 0 && bbox.y >= 0 && bbox.x + bbox.width <= masked.cols() && bbox.y + bbox.height <= masked.rows()) {
-                        //Selects the region of interest (roi) determined from the calcBox function from the masked h channel image
-                        Mat roi = masked.submat(bbox);
-                        //Calculates the standard deviation and mean of the selected region. In this case it will calculate the average color and the color standard deviation
-                        double[] stdMean = calcStdDevMean(roi);
+                //Imgproc.putText(input,"1",new Point(box.x, box.y), Imgproc.FONT_HERSHEY_COMPLEX, 1, new Scalar(0, 0, 0), 3);
+                Point center = getCenter(approxMop);
+                if (containsPoint(approx,centers) && !(usedx.contains(center.x) && usedy.contains(center.y))) {
+                    usedx.add(center.x);
+                    usedy.add(center.y);
 
-                        //Does a test for average color and standard deviation (average color between 10 and 40, exclusive, and standard deviation less than 24)
-                        if (stdMean[1] > 10 && stdMean[1] < 40 && stdMean[0] < 24) {
-                            //Calculate the overall bounding rectangle around the shape
-                            Rect bboxLarge = Imgproc.boundingRect(approxMop);
-
-                            Imgproc.putText(input, Double.toString(Math.floor(100*(1.0 * bboxLarge.width) / (1.0 * bboxLarge.height))/100.0), new Point(bbox.x, bbox.y), Imgproc.FONT_HERSHEY_COMPLEX, 1, new Scalar(255, 0, 0), 3);
-
-                            //Checks the size of the bounding box against what it can be based on a model of a rotating cube. Tolerance is added to account for noise
-                            double tolerance = 0.4; //must be positive
-                            if (((1.0 * bboxLarge.width) / (1.0 * bboxLarge.height)) > Math.sqrt(2.0 / 3.0) * (1 - tolerance) && ((1.0 * bboxLarge.width) / (1.0 * bboxLarge.height)) < Math.sqrt(3.0 / 2.0) * (1 + tolerance)) {
-                                //Checks if shape has 4 or 6 corners, which will be true for any cube-shaped object
-                                if (approx.toList().size() == 4 || approx.toList().size() == 6) {
-                                    //Draws shape to screen
-                                    Imgproc.drawContours(input, contours, i, new Scalar(0, 255, 0), 9);
-                                    if(Imgproc.contourArea(contours.get(i))>maxSize) {
-                                        Moments moments = Imgproc.moments(contours.get(i));
-                                        maxCenter = new Point(moments.m10/moments.m00,moments.m01/moments.m00);
-                                        maxSize = Imgproc.contourArea(contours.get(i));
-                                    }
-                                }
+                    Rect box = Imgproc.boundingRect(convex);
+                    Mat roi = intensityMap.submat(box);
+                    Core.MinMaxLocResult res = Core.minMaxLoc(roi);
+                    if(res.maxVal >= 0.75*max) {
+                        //Imgproc.drawContours(input, contours, i, new Scalar(255,0, 0), 1);
+                        if(convex.toList().size() == 4 || convex.toList().size() == 5 || convex.toList().size() == 6) {
+                            //Imgproc.drawContours(input, contours, i, new Scalar(0,0, 255), 1);
+                            Rect bbox = Imgproc.boundingRect(convex);
+                            if((1.0*bbox.width)/(1.0*bbox.height) >= Math.sqrt(2)/2.0 && (1.0*bbox.width)/(1.0*bbox.height) <= Math.sqrt(2)) {
+                                //Imgproc.drawContours(input, contours, i, new Scalar(0,255, 0), 1);
+                                bboxes.add(bbox);
                             }
                         }
                     }
@@ -209,17 +138,24 @@ public class GoldMineVideoProcess {
             approx.release();
             approxMop.release();
         }
-        //Removes used images from memory to avoid overflow crashes
-        masked.release();
+
+        NonMaxSuppressor nonMaxSuppressor = new NonMaxSuppressor(0.3);
+
+        List<Rect> goodBoxes = nonMaxSuppressor.suppressNonMax(bboxes);
+
+        for(Rect box: goodBoxes) {
+            Imgproc.rectangle(input,box,new Scalar(0,255,0),1);
+        }
 
         //Prints result to the screen, only used for testing purposes
-        //Imgproc.cvtColor(input,input,Imgproc.COLOR_BGR2RGBA);
-        //showResult(input);
+        Imgproc.cvtColor(input,input,Imgproc.COLOR_BGR2RGBA);
+
+        showResult(input);
 
         //Empties the cosmic garbage can
         System.gc();
 
-        return maxCenter;
+        return !goodBoxes.isEmpty() ? goodBoxes : new ArrayList<>();
     }
 
     //Prints result to the screen, only used for testing purposes
@@ -272,6 +208,11 @@ public class GoldMineVideoProcess {
 
         //Calculate and return rectangle coordinates assuming the rectangle is inside a circle of radius minDst
         return new Rect(new Point(Math.round(center.x-minDst/Math.sqrt(2)),(int) Math.round(center.y-minDst/Math.sqrt(2))),new Point(Math.round(center.x+minDst/Math.sqrt(2)),(int) Math.round(center.y+minDst/Math.sqrt(2))));
+    }
+
+    private static Point getCenter(MatOfPoint c) {
+        Moments m = Imgproc.moments(c);
+        return new Point(m.m10/m.m00,m.m01/m.m00);
     }
 
     //Calculates standard deviation and mean of an image. Output is a constant list of doubles with the following format: {standard deviation, mean}

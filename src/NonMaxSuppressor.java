@@ -1,4 +1,3 @@
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.opencv.core.Rect;
 
 import java.util.ArrayList;
@@ -7,14 +6,14 @@ import java.util.List;
 
 public class NonMaxSuppressor {
 
-    private static double thresh;
+    private double thresh;
 
     public NonMaxSuppressor(double thresh) {
 
         this.thresh = thresh;
     }
 
-    public static List<Rect> suppressNonMax(List<Rect> boxes) {
+    public List<Rect> suppressNonMax(List<Rect> boxes) {
         if(boxes.size() == 0) {
             return boxes;
         }
@@ -42,7 +41,7 @@ public class NonMaxSuppressor {
 
         while(idxes.size() > 0) {
 
-            System.out.println(idxes);
+            //System.out.println(idxes);
 
             int last = idxes.size() - 1;
             int i = idxes.get(last);
@@ -54,12 +53,10 @@ public class NonMaxSuppressor {
             List<Double> xx2 = listMin(x2.get(i),x2,idxes.subList(0,last));
             List<Double> yy2 = listMin(y2.get(i),y2,idxes.subList(0,last));
 
-
             List<Double> w = listMax(0,addListConstant(subtractLists(xx2,xx1),1));
             List<Double> h = listMax(0,addListConstant(subtractLists(yy2,yy1),1));
 
             List<Double> overlap = divideLists(multiplyLists(w,h),areas,idxes.subList(0,last));
-
 
             //non_max_suppression_fast(boxes,0.3)
 
@@ -71,7 +68,7 @@ public class NonMaxSuppressor {
         return populateList(boxes,selectedIdxes);
     }
 
-    private static List<Rect> populateList(List<Rect> boxes, List<Integer> idxes) {
+    private List<Rect> populateList(List<Rect> boxes, List<Integer> idxes) {
         List<Rect> output = new ArrayList<>();
         for(int idx : idxes) {
             output.add(boxes.get(idx));
@@ -79,14 +76,14 @@ public class NonMaxSuppressor {
         return output;
     }
 
-    private static List<Double> addListConstant(List<Double> lst, double x) {
+    private List<Double> addListConstant(List<Double> lst, double x) {
         List<Double> output = new ArrayList<>();
         for(double val : lst) {
             output.add(val+x);
         }
         return output;
     }
-    private static List<Double> subtractLists(List<Double> lst1, List<Double> lst2) {
+    private List<Double> subtractLists(List<Double> lst1, List<Double> lst2) {
         assert lst1.size() == lst2.size(): "lists not the same size";
         List<Double> output = new ArrayList<>();
         for (int i = 0; i < lst1.size(); i++) {
@@ -94,14 +91,14 @@ public class NonMaxSuppressor {
         }
         return output;
     }
-    private static List<Double> divideLists(List<Double> lst1, List<Double> lst2, List<Integer> mask) {
+    private List<Double> divideLists(List<Double> lst1, List<Double> lst2, List<Integer> mask) {
         List<Double> output = new ArrayList<>();
         for (int i = 0; i < mask.size(); i++) {
             output.add(lst1.get(i)/lst2.get(mask.get(i)));
         }
         return output;
     }
-    private static List<Double> multiplyLists(List<Double> lst1, List<Double> lst2) {
+    private List<Double> multiplyLists(List<Double> lst1, List<Double> lst2) {
         assert lst1.size() == lst2.size(): "lists not the same size";
         List<Double> output = new ArrayList<>();
         for (int i = 0; i < lst1.size(); i++) {
@@ -110,29 +107,30 @@ public class NonMaxSuppressor {
         return output;
     }
 
-    private static void deleteBadIndexes(List<Integer> idxes, List<Double> overlaps) {
+    private void deleteBadIndexes(List<Integer> idxes, List<Double> overlaps) {
         for(int i = 0; i < overlaps.size(); i++) {
-            if(overlaps.get(i) > thresh) {
+            if(overlaps.get(i) > thresh ) {
                 idxes.remove(i);
+                break;
             }
         }
     }
 
-    private static List<Double> listMax(double x, List<Double> lst, List<Integer> mask) {
+    private List<Double> listMax(double x, List<Double> lst, List<Integer> mask) {
         List<Double> output = new ArrayList<>();
         for(int idx : mask) {
             output.add(Math.max(x,lst.get(idx)));
         }
         return output;
     }
-    private static List<Double> listMax(double x, List<Double> lst) {
+    private List<Double> listMax(double x, List<Double> lst) {
         List<Double> output = new ArrayList<>();
         for(double val : lst) {
             output.add(Math.max(x,val));
         }
         return output;
     }
-    private static List<Double> listMin(double x, List<Double> lst, List<Integer> mask) {
+    private List<Double> listMin(double x, List<Double> lst, List<Integer> mask) {
         List<Double> output = new ArrayList<>();
         for(int idx : mask) {
             output.add(Math.min(x,lst.get(idx)));
@@ -140,7 +138,7 @@ public class NonMaxSuppressor {
         return output;
     }
 
-    private static List<Integer> argsort(List<Double> input) {
+    private List<Integer> argsort(List<Double> input) {
         List<Integer> output = new ArrayList<>();
         List<Double> cpy = new ArrayList<>();
         List<Double> lstSorted = new ArrayList<>();
