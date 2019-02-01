@@ -48,21 +48,78 @@ public class VideoTest {
         List<KalmanTracker> kalmanTrackers = new ArrayList<>();
 
         long startTime = System.currentTimeMillis();
+
+        List<Rect> prevRects = new ArrayList<>();
+        List<TrackedObject> tracked = new ArrayList<>();
+        List<TrackedObject> newTracks = new ArrayList<>();
+        List<Point> used = new ArrayList<>();
+
         for (;;) {
             Imgproc.resize(mat, mat, new Size(320, (int) Math.round((320/mat.size().width)*mat.size().height)));
             List<Rect> rects = GoldMineVideoProcess.main(mat);
 
-            for(Rect r : rects) {
-                Point center = new Point(r.x+r.width/2.0,r.y+r.height/2.0);
-                if(!pointInAnyBoxes(rects,center)) {
-
+            for (Rect r : rects) {
+                Point center = new Point(r.x + r.width / 2.0, r.y + r.height / 2.0);
+                Imgproc.circle(mat,center,5,new Scalar(255,0,0),-1);
+                boolean foundMatch = false;
+                for (TrackedObject t1 : tracked) {
+                    if(t1.r.contains(center)) {
+                        t1.r = r;
+                        t1.kt.update(center,true);
+                        newTracks.add(t1);
+                        foundMatch = true;
+                        break;
+                    }
+                }
+                if (!foundMatch) {
+                    TrackedObject t2 = new TrackedObject(r, new KalmanTracker(center));
+                    t2.kt.update(center,true);
+                    newTracks.add(t2);
                 }
             }
+
+            for(TrackedObject t : tracked) {
+                if(!t.kt.wasUpdated && t.kt.missedTime < 3000) {
+                    t.kt.update(new Point(),false);
+                    Point center = new Point(t.r.x + t.r.width / 2.0, t.r.y + t.r.height / 2.0);
+                    t.r = new Rect(Math.max(0, (int) Math.round(t.r.x + (t.kt.lastResult.x - center.x))), Math.max(0, (int) Math.round(t.r.y + (t.kt.lastResult.y - center.y))), t.r.width, t.r.height);
+                    Imgproc.rectangle(mat, t.r, new Scalar(255, 0, 0), 1);
+                    newTracks.add(t);
+                }
+            }
+
+
+            System.out.println("");
+
+            used.clear();
+
+            tracked.clear();
+            tracked.addAll(newTracks);
+            newTracks.clear();
+
+            //System.out.println(tracked.size());
+
+            for(TrackedObject t : tracked) {
+
+
+                Point prediction = t.kt.getPrediction();
+                Imgproc.circle(mat,prediction,5,new Scalar(0,0,255),-1);
+
+                Imgproc.putText(mat,Double.toString(Math.round(100*t.kt.trustworthyness)/100.0),prediction,Imgproc.FONT_HERSHEY_PLAIN,1, new Scalar(255,0,0));
+
+                //System.out.println(t.kt.trustworthyness);
+                //Imgproc.circle(mat,prediction,5,new Scalar(0,0,255),-1);
+            }
+
+            //System.out.println("");
+            prevRects.clear();
+            prevRects.addAll(rects);
 /*
             if((p.x != 0 || p.y != 0)) {
                 kalmanTracker.update(p,true);
 
             }
+
 
             Point prediction = kalmanTracker.getPrediction();
 
@@ -78,7 +135,16 @@ public class VideoTest {
 
             // Grab the next frame
             cap.read(mat);
+
+            try {
+                //Thread.sleep(2000);
+            }
+            catch (Exception e) {
+
+            }
+
         }
+
     }
 
 
