@@ -20,7 +20,7 @@ public class GoldMine2 {
     public static void main (String args[]) {
 
         String filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\40108068_320820165353263_2733329782681540191_n.jpg";
-        filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\20180908_134210.jpg";
+        filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\IMG-1747.jpg";
         //filename = "C:\\Users\\coles\\Desktop\\Data\\unnamed1.jpg";
         //filename = "C:\\Users\\coles\\Desktop\\Data\\20180910_094912.jpg";
         //filename = "C:\\Users\\coles\\Desktop\\Data\\b.jpg";
@@ -29,10 +29,14 @@ public class GoldMine2 {
         Imgproc.resize(input, input, new Size(320, (int) Math.round((320/input.size().width)*input.size().height))); //Reduces image size for speed
 
         Retina retina = Retina.create(input.size());
-        retina.setup("C:\\Users\\coles\\Desktop\\Data\\RetinaParams2.xml");
+        retina.write("C:\\Users\\Cole Savage\\Desktop\\RetinaParams2.xml");
+        retina.setup("C:\\Users\\Cole Savage\\Desktop\\RetinaParams2.xml");
+        retina.setup();
         retina.clearBuffers();
 
         retina.applyFastToneMapping(input,input);
+
+        //Imgcodecs.imwrite("C:\\Users\\Cole Savage\\Desktop\\dump\\1.jpg",input);
 
         Imgproc.cvtColor(input,input,Imgproc.COLOR_BGR2RGBA); //Converts input image from BGR to RGBA, only used for testing purposes
 
@@ -50,6 +54,9 @@ public class GoldMine2 {
         Core.bitwise_and(labThresh,yuvThresh,labThresh);
 
         Imgproc.morphologyEx(labThresh,labThresh,Imgproc.MORPH_CLOSE,Imgproc.getStructuringElement(Imgproc.MORPH_RECT,new Size(5,5)));
+
+        Imgcodecs.imwrite("C:\\Users\\Cole Savage\\Desktop\\dump\\2.jpg",labThresh);
+        Imgcodecs.imwrite("C:\\Users\\Cole Savage\\Desktop\\dump\\3.jpg",intensityMap);
 
         /*Computes the distance transform of the Lab image threshold and then does a binary threshold of that
         The distance transform sorts pixels by their distance from the nearest black pixel. Larger distance means a higher value
@@ -155,7 +162,19 @@ public class GoldMine2 {
             approxMop.release();
         }
 
+        Mat b = input.clone();
+
         NonMaxSuppressor nonMaxSuppressor = new NonMaxSuppressor(0.3);
+
+        for(Rect r :bboxes) {
+            Imgproc.rectangle(b,r,new Scalar(255,0,0),1);
+        }
+
+        Imgproc.cvtColor(b,b,Imgproc.COLOR_BGR2RGBA);
+
+        Imgproc.resize(b, b, new Size(640, (int) Math.round((640/b.size().width)*b.size().height)));
+
+        Imgcodecs.imwrite("C:\\Users\\Cole Savage\\Desktop\\dump\\5.jpg",b);
 
         List<Rect> goodBoxes = nonMaxSuppressor.suppressNonMax(bboxes);
 
@@ -166,6 +185,10 @@ public class GoldMine2 {
         //Prints result to the screen, only used for testing purposes
         Imgproc.cvtColor(input,input,Imgproc.COLOR_BGR2RGBA);
         showResult(input);
+
+        Imgproc.resize(input, input, new Size(640, (int) Math.round((640/input.size().width)*input.size().height)));
+
+        Imgcodecs.imwrite("C:\\Users\\Cole Savage\\Desktop\\dump\\4.jpg",input);
 
         //Empties the cosmic garbage can
         System.gc();

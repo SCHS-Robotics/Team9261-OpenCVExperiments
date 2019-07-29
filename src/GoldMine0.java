@@ -14,8 +14,8 @@ public class GoldMine0 {
     static {System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}
     public static void main (String args[]) {
         String filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\40108068_320820165353263_2733329782681540191_n.jpg";
-        filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\20180910_095634.jpg";
-        filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\20180910_094912.jpg";
+        filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\20180908_130955.jpg";
+        //filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\20180910_094912.jpg";
         //filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\b.jpg";
 
         Mat testImg = Imgcodecs.imread(filename);
@@ -45,25 +45,11 @@ public class GoldMine0 {
 
         Core.bitwise_and(labThresh,questionableThresh,yellowMask);
 
-        Imgproc.distanceTransform(yellowMask, distanceTransform, Imgproc.DIST_L2, 3);
-        distanceTransform.convertTo(distanceTransform, -1);
-
-        double[] stdMean = calcStdDevMean(distanceTransform);
-        double std = stdMean[0];
-        double mean = stdMean[1];
-
-        Mat test = new Mat();
-
-        Imgproc.threshold(distanceTransform,test,mean+2*std,255,Imgproc.THRESH_BINARY);
-        //Imgproc.dilate(test,test,Imgproc.getStructuringElement(Imgproc.MORPH_RECT,new Size(5,5)));
-
-        test.convertTo(test,CvType.CV_8UC1);
-
-        double med = getMedian(test);
+        double med = getMedian(yellowMask);
 
         Mat edges = new Mat();
         double sigma = 0.33;
-        Imgproc.Canny(test,edges,(int) Math.round(Math.max(0,(1-sigma)*med)),(int) Math.round(Math.min(255,1+sigma)*med));
+        Imgproc.Canny(yellowMask,edges,(int) Math.round(Math.max(0,(1-sigma)*med)),(int) Math.round(Math.min(255,(1+sigma)*med)));
 
         Imgproc.dilate(edges,edges,Imgproc.getStructuringElement(Imgproc.MORPH_CROSS,new Size(5,5)));
 
@@ -86,7 +72,7 @@ public class GoldMine0 {
             double realArea = Imgproc.contourArea(c);
             double realPeri = Imgproc.arcLength(new MatOfPoint2f(c.toArray()),true);
             System.out.println(Math.abs((realArea-idealArea)/idealArea));
-            if(Imgproc.contourArea(c) > 5000 && Math.abs((realArea-idealArea)/idealArea) <= 1 && Math.abs((realPeri-idealPeri)/idealPeri) < 1) {
+            if(Imgproc.contourArea(c) > 5000 && Math.abs((realArea-idealArea)/idealArea) <= 0.7 && Math.abs((realPeri-idealPeri)/idealPeri) < 0.7) {
                 num++;
                 Imgproc.drawContours(testImg,contours,contours.indexOf(c),new Scalar(0,255,0),5);
                 /*RotatedRect a = Imgproc.minAreaRect(new MatOfPoint2f(c.toArray()));
@@ -107,6 +93,8 @@ public class GoldMine0 {
         //showResult(distanceTransform);
         //showResult(edges);
         showResult(testImg);
+
+        Imgcodecs.imwrite("C:\\Users\\Cole Savage\\Desktop\\IMG-1747.jpg",testImg);
 
         //Mat test = new Mat();
 

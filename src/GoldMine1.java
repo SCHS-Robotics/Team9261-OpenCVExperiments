@@ -20,7 +20,7 @@ public class GoldMine1 {
         filename = "C:\\Users\\coles\\Desktop\\Data\\20180910_095634.jpg";
         //filename = "C:\\Users\\coles\\Desktop\\Data\\20180910_094912.jpg";
         //filename = "C:\\Users\\coles\\Desktop\\Data\\b.jpg";
-        filename = "C:\\Users\\coles\\Desktop\\Data\\failure\\IMG-1747.jpg";
+        filename = "C:\\Users\\Cole Savage\\Desktop\\Data\\IMG-1733.jpg";
         Mat input = Imgcodecs.imread(filename); //Reads in image from file, only used for testing purposes
         Imgproc.resize(input, input, new Size(320, (int) Math.round((320/input.size().width)*input.size().height))); //Reduces image size for speed
 
@@ -29,19 +29,6 @@ public class GoldMine1 {
         retina.clearBuffers();
 
         retina.applyFastToneMapping(input,input);
-
-        Mat yuv = new Mat();
-        Imgproc.cvtColor(input,yuv,Imgproc.COLOR_RGB2YUV);
-        Mat uChan = new Mat();
-        Core.extractChannel(yuv,uChan,1);
-        Mat b = new Mat();
-        Imgproc.medianBlur(uChan,uChan,9);
-        //Imgproc.filter2D(uChan,uChan,-1,Imgproc.getStructuringElement(Imgproc.MORPH_RECT,new Size(1,1)));
-        //showResult(b);
-        //showResult(uChan);
-        Mat a = new Mat();
-        Imgproc.threshold(uChan,a,145,255,Imgproc.THRESH_BINARY);
-        showResult(a);
 
         Imgproc.cvtColor(input,input,Imgproc.COLOR_BGR2RGBA); //Converts input image from BGR to RGBA, only used for testing purposes
 
@@ -95,32 +82,9 @@ public class GoldMine1 {
         //Converts input from RGB color format to HSV color format, then extracts the h channel
         //HSV stands for hue, saturation, value. We are only interested in the h channel, which stores color information
         //Because of its division of color into a separate channel, HSV format is resistant to lighting changes and so is good for color filtering
-        Imgproc.cvtColor(input,hsv,Imgproc.COLOR_RGB2HSV_FULL);
+        Imgproc.cvtColor(input,hsv,Imgproc.COLOR_RGB2HSV);
         Core.extractChannel(hsv,hChan,0);
 
-        Mat sChan = new Mat();
-        Core.extractChannel(hsv,sChan,1);
-
-        Mat temp = new Mat(hChan.size(),hChan.type(),new Scalar(50.59));
-
-        Mat temp2 = new Mat();
-        Core.absdiff(hChan,temp,temp2);
-
-        Core.bitwise_not(temp2,temp2);
-
-        Core.bitwise_and(temp2,sChan,temp2);
-
-        Imgproc.medianBlur(temp2,temp2,9);
-
-        //showResult(temp2);
-
-        double stdm2[] = calcStdDevMean(temp2);
-
-        Core.MinMaxLocResult minMaxLocResult = Core.minMaxLoc(temp2);
-
-        Imgproc.circle(input,minMaxLocResult.maxLoc,10,new Scalar(0,0,0),-1);
-
-        showResult(temp2);
 
         //Imgproc.adaptiveThreshold(temp2,temp2,255,Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C,Imgproc.THRESH_BINARY,13,0);
         //showResult(temp2);
@@ -137,8 +101,6 @@ public class GoldMine1 {
         //showResult(temp2);
 
         //showResult(labThresh);
-
-        Core.bitwise_and(labThresh,a,labThresh);
 
         //showResult(labThresh);
 
@@ -168,7 +130,7 @@ public class GoldMine1 {
         Mat msk = new Mat();
         Imgproc.threshold(distanceTransform,msk,0,255,Imgproc.THRESH_BINARY);
 
-        double stdm[] = calcStdDevMean(distanceTransform,msk);
+        double stdm[] = calcStdDevMean(distanceTransform,msk); //std deviation and mean for > 0 pixels
 
         Imgproc.threshold(distanceTransform,thresholded,stdm[1]/stdm[0],255,Imgproc.THRESH_BINARY);
 
