@@ -3,9 +3,11 @@ import java.util.function.Function;
 public class VelocitySmoother {
 
     private double aMax;
-    private boolean functionAlreadyInUse;
     private long lastGenerationTime;
     private double currentTarget;
+    private double profileStartVelocity;
+    private double t_critical;
+    private boolean transitioning;
     private Function<Double,Double> velocityProfile;
     private Function<Double,Double> accelerationProfile;
     private BiFunction<Double,Double,Double> jerkProfile;
@@ -16,64 +18,117 @@ public class VelocitySmoother {
 
 
     public VelocitySmoother(double accelMax) {
-        this.aMax = accelMax;
-        this.functionAlreadyInUse = false;
-        this.velocityProfile = (Double time)-> (dP*(3*Math.pow((time-xShift)/t0,2)-2*Math.pow((time-xShift)/t0,3))+yShift);
-        this.accelerationProfile = (Double time) -> (((6*dP)/Math.pow(t0,2))*(time-xShift)-((6*dP)/Math.pow(t0,3))*Math.pow(time-xShift,2));
-        this.jerkProfile = (Double shift, Double time) -> ((6*dP)/Math.pow(t0,2) - ((12*dP)/Math.pow(t0,3))*(time-shift));
-        this.dP = 0;
-        this.t0 = 1;
-        this.xShift = 0;
-        this.yShift = 0;
-        this.lastGenerationTime = 0;
+        aMax = Math.abs(accelMax);
+        velocityProfile = (Double time)-> (dP*(3*Math.pow((time)/t0,2)-2*Math.pow((time)/t0,3))+yShift);
+        accelerationProfile = (Double time) -> (((6*dP)/Math.pow(t0,2))*(time)-((6*dP)/Math.pow(t0,3))*Math.pow(time,2));
+        jerkProfile = (Double shift, Double time) -> ((6*dP)/Math.pow(t0,2) - ((12*dP)/Math.pow(t0,3))*(time-shift));
+        dP = 0;
+        t0 = 1;
+        xShift = 0;
+        yShift = 0;
+        lastGenerationTime = 0;
+        profileStartVelocity = 0;
+        t_critical = 0;
+        transitioning = false;
+    }
+
+    public void setInitialVelocity(double initialVelocity) {
+        profileStartVelocity = initialVelocity;
     }
 
     public double getVelocity() {
-        return velocityProfile.apply((System.currentTimeMillis()-lastGenerationTime)/1000.0);
+        System.out.println("t internal: " + (System.currentTimeMillis()-lastGenerationTime)/1000.0);
+        if(transitioning && System.currentTimeMillis() >= t_critical) {
+            transitioning = false;
+            setInitialVelocity(velocityProfile.apply(0.0));
+            updateProfiles(currentTarget);
+        }
+        return (System.currentTimeMillis()-lastGenerationTime)/1000.0 < t0 ? velocityProfile.apply((System.currentTimeMillis()-lastGenerationTime)/1000.0) : currentTarget;
     }
 
-    public void update(double current_velocity, double target_velocity) {
+    public void updateProfiles(double target_velocity) {
 
         if(lastGenerationTime == 0) {
             lastGenerationTime = System.currentTimeMillis();
             currentTarget = target_velocity;
         }
 
-        double tk = (System.currentTimeMillis()-lastGenerationTime)/1000.0;
+        double t = (System.currentTimeMillis()-lastGenerationTime)/1000.0;
 
-        double currentAcceleration = accelerationProfile.apply(tk);
 
-        double dP = target_velocity-current_velocity;
-        double t0 = (3.0*dP)/(2.0*aMax);
 
-        if(target_velocity != currentTarget) {
-            double k1 = 2 * tk - t0;
-            double k2 = t0 * tk - Math.pow(tk, 2) - currentAcceleration * (Math.pow(t0, 3) / (6 * dP));
+        if(target_velocity == currentTarget) {
+            double dP = target_velocity-profileStartVelocity;
+            double t0 = (3.0*dP)/(2.0*sgn(dP)*aMax);
 
-            double shift1 = (-k1 + Math.sqrt(Math.pow(k1, 2) + 4 * k2)) / -2.0;
-            double shift2 = (-k1 - Math.sqrt(Math.pow(k1, 2) + 4 * k2)) / -2.0;
+            this.yShift = profileStartVelocity;
+            this.t0 = t0;
+            this.dP = dP;
+            lastGenerationTime = System.currentTimeMillis();
 
-            double jerk1 = jerkProfile.apply(shift1, tk);
-            double jerk2 = jerkProfile.apply(shift2, tk);
-
-            if (dP < 0) {
-                xShift = jerk1 < 0 ? shift1 : shift2;
-            } else if (dP > 0) {
-                xShift = jerk1 > 0 ? shift1 : shift2;
-            } else {
-                xShift = 0;
-            }
         }
 
-        this.t0 = t0;
-        this.dP = dP;
-        currentTarget = target_velocity;
+        else if(true) {
+            currentTarget = target_velocity;
+            profileStartVelocity = velocityProfile.apply(t);
 
-        System.out.println(dP);
-        System.out.println(t0);
-        System.out.println(tk);
-        System.out.println(xShift);
-        System.out.println(currentAcceleration);
+            double currentAcceleration = accelerationProfile.apply(t);
 
+            double dP = target_velocity - profileStartVelocity;
+            double t0 = (3.0 * dP) / (2.0 * sgn(dP) * aMax);
+
+            double k1 = 2 * t - t0;
+            double k2 = t0 * t - Math.pow(t, 2) - currentAcceleration * (Math.pow(t0, 3) / (6 * dP));
+
+            double shift1 = (k1 - Math.sqrt(Math.pow(k1, 2) + 4 * k2)) / 2.0;
+            double shift2 = (k1 + Math.sqrt(Math.pow(k1, 2) + 4 * k2)) / 2.0;
+
+            this.t0 = t0;
+            this.dP = dP;
+
+            double jerk1 = jerkProfile.apply(shift1, t);
+            double jerk2 = jerkProfile.apply(shift2, t);
+
+            if (sgn(jerk1) == sgn(jerk2) && jerk1 != 0 && jerk2 != 0) {
+                System.out.println("Bad things are happening");
+            }
+
+            xShift = sgn(jerk1) == sgn(dP) ? shift1 : shift2;
+
+            yShift = 0;
+            yShift = profileStartVelocity - velocityProfile.apply(t - xShift);
+            lastGenerationTime = System.currentTimeMillis() + (long) (1000 * (xShift - t));
+            t_critical = lastGenerationTime;
+
+            if (sgn(dP) == sgn(velocityProfile.apply(t - xShift)) && velocityProfile.apply(0.5*t0-xShift) == currentTarget) {
+                transitioning = false;
+            }
+
+            else if(sgn(dP) == sgn(velocityProfile.apply(t - xShift))) {
+                transitioning = true;
+                lastGenerationTime = System.currentTimeMillis() + (long) (1000 * (0.5*t0));
+                t_critical = lastGenerationTime;
+            }
+
+            else {
+                transitioning = true;
+            }
+        }
+        else {
+            currentTarget = target_velocity;
+        }
+
+        System.out.println("dP: "+dP);
+        System.out.println("t0: "+t0);
+        System.out.println("t: "+t);
+        System.out.println("xShift: "+xShift);
+        System.out.println("yShift: "+yShift);
+        System.out.println("critical time: "+ (System.currentTimeMillis()-t_critical)/1000.0);
+        System.out.println("transitioning: "+transitioning);
+
+    }
+
+    private int sgn(double num) {
+        return num < 0 ? -1 : 1;
     }
 }

@@ -26,7 +26,9 @@ public class Grapher {
         yData.convertTo(xData,CvType.CV_64F);
 
         double t = 0;
-        int loops = 0;
+
+        double lastTimeStep = 0;
+
         while(t <= 30) {
 
             if(t <= maxX) {
@@ -44,16 +46,22 @@ public class Grapher {
 
                 //shift left then draw to empty space
 
-                System.out.println(xData.dump());
+                //System.out.println(xData.dump());
 
-                double xShift = xData.get(1,0)[0];
                 double lastX = xData.get(xData.rows()-1,0)[0];
+
                 xData = xData.submat(1,xData.rows(),0,1);
                 Mat newX = Mat.ones(1,1,CvType.CV_64F);
 
-                Core.multiply(newX,new Scalar(lastX+xShift),newX); //fix, newx should be different
+                Core.multiply(newX,new Scalar(lastX+lastTimeStep),newX); //fix, newx should be different
                 xData.push_back(newX);
+                Core.subtract(xData,new Scalar(lastTimeStep),xData);
+
+                double xShift = xData.get(0,0)[0];
+
                 Core.subtract(xData,new Scalar(xShift),xData);
+
+                System.out.println(t-10*Math.floor(t/10.0));
 
                 yData = yData.submat(1,yData.rows(),0,1);
                 yData.push_back(Mat.zeros(1,1,CvType.CV_64F));
@@ -74,14 +82,17 @@ public class Grapher {
             plotter.setMaxY(10);
             plotter.setMinX(0);
             plotter.setMinY(-10);
+            //plotter.setPlotSize(1280,720);
             plotter.setShowText(false);
 
             Mat plot = new Mat();
             plotter.render(plot);
             showResult(plot);
 
-            loops++;
-            t+=loops %2 == 0 ? 0.1 : 0.2;
+            System.out.println(xData.reshape(1,1).dump());
+
+            lastTimeStep = 0.1*(random.nextInt(4)+1);
+            t+=lastTimeStep;
                     //0.1*(random.nextInt(2)+1);
         }
     }
