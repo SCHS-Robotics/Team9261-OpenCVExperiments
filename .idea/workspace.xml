@@ -2,31 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3087684-9b78-498b-aaf8-eb342ea29b5d" name="Default Changelist" comment="Fixed small non max suppression bug and confused myself with kalman filters">
-      <change afterPath="$PROJECT_DIR$/src/BiFunction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/VelocitySmoother.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/VelocitySmootherTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/CameraCalib.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/OCRSeparate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/svmtest2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/9261-LevelUp-OpenCVExperiments.iml" beforeDir="false" afterPath="$PROJECT_DIR$/9261-LevelUp-OpenCVExperiments.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/DetectPictograph.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/DetectPictograph.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/FeatureMatcherTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/FeatureMatcherTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/FeatureMatcherTestOptimized.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/FeatureMatcherTestOptimized.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/GoldMine0.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/GoldMine0.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/GoldMine1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/GoldMine1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/HSVTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/HSVTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/KMedioids.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/KMedioids.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Line.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Line.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/MainClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/MainClass.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test3$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test3$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test3$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test3$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test3$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test3$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/Test3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/VideoTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/VideoTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/svmtest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/svmtest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/temp1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/temp1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/test.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/9261-LevelUp-OpenCVExperiments/test.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DetectPictograph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DetectPictograph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FeatureDetection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FeatureDetection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HaarTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HaarTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MainClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Test2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/g.java" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,6 +27,9 @@
     <SUITE FILE_PATH="coverage/Team9261_OpenCVExperiments$VideoTest.coverage" NAME="VideoTest Coverage Results" MODIFIED="1548979720263" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Team9261_OpenCVExperiments$GoldMine2.coverage" NAME="GoldMine2 Coverage Results" MODIFIED="1548307853935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Team9261_OpenCVExperiments$SilverMine.coverage" NAME="SilverMine Coverage Results" MODIFIED="1547158720798" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -55,8 +46,8 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1546125917945" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/OpenCV/CustomCV/opencv_java401.dll" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="power.mode.ii" />
@@ -83,26 +74,30 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.VelocitySmootherTest">
-    <configuration name="GoldMine1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="GoldMine1" />
-      <module name="9261-LevelUp-OpenCVExperiments" />
-      <RunnerSettings RunnerId="Debug with VisualVM">
-        <option name="visualVMId" value="186004429163160" />
-      </RunnerSettings>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GoldMine2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="GoldMine2" />
+  <component name="RunManager" selected="Application.CameraCalib">
+    <configuration name="CameraCalib" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="CameraCalib" />
       <module name="9261-LevelUp-OpenCVExperiments" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Grapher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Grapher" />
+    <configuration name="MyClass0" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="MyClass0" />
+      <module name="9261-LevelUp-OpenCVExperiments" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MyClass1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="MyClass1" />
+      <module name="9261-LevelUp-OpenCVExperiments" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MyClass3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="MyClass3" />
       <module name="9261-LevelUp-OpenCVExperiments" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -115,27 +110,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="VideoTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="VideoTest" />
-      <module name="9261-LevelUp-OpenCVExperiments" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
-      <item itemvalue="Application.GoldMine2" />
-      <item itemvalue="Application.GoldMine1" />
-      <item itemvalue="Application.VideoTest" />
+      <item itemvalue="Application.MyClass0" />
+      <item itemvalue="Application.MyClass1" />
+      <item itemvalue="Application.MyClass3" />
       <item itemvalue="Application.VelocitySmootherTest" />
-      <item itemvalue="Application.Grapher" />
+      <item itemvalue="Application.CameraCalib" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.CameraCalib" />
+        <item itemvalue="Application.MyClass0" />
+        <item itemvalue="Application.MyClass1" />
+        <item itemvalue="Application.MyClass3" />
         <item itemvalue="Application.VelocitySmootherTest" />
-        <item itemvalue="Application.Grapher" />
-        <item itemvalue="Application.VideoTest" />
-        <item itemvalue="Application.GoldMine2" />
-        <item itemvalue="Application.GoldMine1" />
       </list>
     </recent_temporary>
   </component>
@@ -298,6 +286,20 @@
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>
@@ -323,5 +325,77 @@
     <MESSAGE value="Added non max suppression for cube detection" />
     <MESSAGE value="Fixed small non max suppression bug and confused myself with kalman filters" />
     <option name="LAST_COMMIT_MESSAGE" value="Fixed small non max suppression bug and confused myself with kalman filters" />
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>9261-LevelUp-OpenCVExperiments</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

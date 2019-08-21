@@ -30,7 +30,6 @@ public class HaarTester {
         processNoiseCov = processNoiseCov.mul(processNoiseCov, 1e-4);
         System.out.println(processNoiseCov.dump());
 
-
         CascadeClassifier cascade = new CascadeClassifier(cascadePath);
 
         MatOfRect boundingBoxes = new MatOfRect();

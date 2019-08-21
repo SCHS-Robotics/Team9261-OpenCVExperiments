@@ -62,6 +62,7 @@ public class DetectPictograph {
             pts2.add(kptest.toList().get(good_matches.get(i).trainIdx).pt);
         }
 
+
         // convertion of data types - there is maybe a more beautiful way
         Mat outputMask = new Mat();
         MatOfPoint2f pts1Mat = new MatOfPoint2f();
@@ -69,7 +70,7 @@ public class DetectPictograph {
         MatOfPoint2f pts2Mat = new MatOfPoint2f();
         pts2Mat.fromList(pts2);
 
-        // Find homography - here just used to perform match filtering with RANSAC, but could be used to e.g. stitch images
+        // Find homography - here just used to perform match filtering with RANSAC, but could be used to e.OCRSeparate. stitch images
         // the smaller the allowed reprojection error (here 15), the more matches are filtered
         Mat Homog = Calib3d.findHomography(pts1Mat, pts2Mat, Calib3d.RANSAC, 15, outputMask, 2000, 0.995);
 

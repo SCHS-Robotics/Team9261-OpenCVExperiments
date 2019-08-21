@@ -15,9 +15,6 @@ import java.util.List;
 
 import static org.opencv.core.CvType.CV_32F;
 
-/**
- * Created by Kinath on 8/6/2016.
- */
 public class FeatureDetection {
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);}

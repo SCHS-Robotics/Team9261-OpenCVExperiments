@@ -38,7 +38,7 @@ public class Test2 {
 
         Mat warped;
 
-        //Mat g = new Mat();
+        //Mat OCRSeparate = new Mat();
 
         //Mat structure = Imgproc.getStructuringElement(Imgproc.MORPH_RECT,new Size(1,1));
 

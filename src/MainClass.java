@@ -249,8 +249,8 @@ public class MainClass {
 
         Imgproc.findContours(testedges,testcontours,new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
         for(MatOfPoint c:testcontours) {
-            //double g = Imgproc.matchShapes(templateContour,c,Imgproc.CV_CONTOURS_MATCH_I3,0);
-            //System.out.println(g);
+            //double OCRSeparate = Imgproc.matchShapes(templateContour,c,Imgproc.CV_CONTOURS_MATCH_I3,0);
+            //System.out.println(OCRSeparate);
         }
         Mat output = new Mat(testedges.size(),test.type());
         //Imgproc.drawContours(output,testcontours,-1,new Scalar(255,255,255));
